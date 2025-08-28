@@ -1,0 +1,48 @@
+# --- Node / npm ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Mantén el lockfile para builds reproducibles
+# !package-lock.json
+
+# --- Builds / temporales ---
+www/
+dist/
+build/
+coverage/
+.tmp/
+.temp/
+
+# --- Angular ---
+.angular/
+.angular/cache/
+
+# --- Ionic / Capacitor ---
+# (Se recomienda COMMIT de ios/ y android/ en Capacitor, pero ignorar artefactos)
+ios/Pods/
+ios/App/App.xcodeproj/project.xcworkspace/xcuserdata/
+ios/App/App.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
+
+android/.gradle/
+android/.idea/
+android/app/build/
+android/build/
+android/local.properties
+
+# --- Secrets / credenciales ---
+.env
+.env.*.local
+*.keystore
+*.jks
+google-services.json
+GoogleService-Info.plist
+
+# --- SO / editores ---
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json

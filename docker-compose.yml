@@ -1,0 +1,18 @@
+services:
+  ionic:
+    build: .
+    working_dir: /app/app
+    volumes:
+      - ./:/app
+      - node_modules:/app/app/node_modules
+    ports:
+      - "8100:8100"   # ionic serve
+      - "5173:5173"   # vite (si aplica)
+      - "35729:35729" # livereload (si aplica)
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    command: >
+      sh -lc "npm ci || npm i; ionic serve --external --host=0.0.0.0 --port=8100"
+volumes:
+  node_modules:
