@@ -7,8 +7,8 @@ services:
       - node_modules:/app/app/node_modules
     ports:
       - "8100:8100"   # ionic serve
-      - "5173:5173"   # vite (si aplica)
-      - "35729:35729" # livereload (si aplica)
+      - "5173:5173"   
+      - "35729:35729" 
     environment:
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
