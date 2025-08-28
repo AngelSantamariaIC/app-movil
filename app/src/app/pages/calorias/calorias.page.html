@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Gasto calórico (TMB)</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label position="stacked">Peso (kg)</ion-label>
+    <ion-input type="number" inputmode="decimal" [(ngModel)]="peso" name="peso" placeholder="Ej: 70"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Altura (cm)</ion-label>
+    <ion-input type="number" inputmode="decimal" [(ngModel)]="altura" name="altura" placeholder="Ej: 175"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Edad (años)</ion-label>
+    <ion-input type="number" inputmode="numeric" [(ngModel)]="edad" name="edad" placeholder="Ej: 30"></ion-input>
+  </ion-item>
+
+  <div class="ion-padding-top">
+    <ion-button expand="block" (click)="calcular()">Calcular gasto calórico</ion-button>
+    <ion-button expand="block" fill="outline" color="medium" (click)="limpiar()">Limpiar</ion-button>
+  </div>
+
+  <ion-item class="ion-padding-top">
+    <ion-label><div>{{ resultado || '—' }}</div></ion-label>
+  </ion-item>
+</ion-content>

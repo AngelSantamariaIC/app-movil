@@ -11,6 +11,18 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'temperatura',
+    loadChildren: () => import('./pages/temperatura/temperatura.module').then( m => m.TemperaturaPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'calorias',
+    loadChildren: () => import('./pages/calorias/calorias.module').then( m => m.CaloriasPageModule)
+  },
 ];
 
 @NgModule({

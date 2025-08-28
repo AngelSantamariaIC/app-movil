@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Conversor de temperaturas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label position="stacked">Temperatura</ion-label>
+    <ion-input type="number" inputmode="decimal" [(ngModel)]="valor" name="valor" placeholder="Ej: 36.6"></ion-input>
+  </ion-item>
+
+  <ion-item lines="none" class="ion-padding-top">
+    <ion-label>Unidad de origen</ion-label>
+  </ion-item>
+  <ion-radio-group [(ngModel)]="origen" name="origen">
+    <ion-item><ion-label>Celsius (°C)</ion-label><ion-radio slot="end" value="C"></ion-radio></ion-item>
+    <ion-item><ion-label>Fahrenheit (°F)</ion-label><ion-radio slot="end" value="F"></ion-radio></ion-item>
+    <ion-item><ion-label>Kelvin (K)</ion-label><ion-radio slot="end" value="K"></ion-radio></ion-item>
+  </ion-radio-group>
+
+  <ion-item lines="none" class="ion-padding-top">
+    <ion-label>Unidad de destino</ion-label>
+  </ion-item>
+  <ion-radio-group [(ngModel)]="destino" name="destino">
+    <ion-item><ion-label>Celsius (°C)</ion-label><ion-radio slot="end" value="C"></ion-radio></ion-item>
+    <ion-item><ion-label>Fahrenheit (°F)</ion-label><ion-radio slot="end" value="F"></ion-radio></ion-item>
+    <ion-item><ion-label>Kelvin (K)</ion-label><ion-radio slot="end" value="K"></ion-radio></ion-item>
+  </ion-radio-group>
+
+  <div class="ion-padding-top">
+    <ion-button expand="block" (click)="convertir()" [disabled]="valor === ''">Convertir</ion-button>
+    <ion-button expand="block" fill="outline" color="medium" (click)="limpiar()">Limpiar</ion-button>
+  </div>
+
+  <ion-item class="ion-padding-top">
+    <ion-label><strong>Resultado:</strong><div>{{ resultado || '—' }}</div></ion-label>
+  </ion-item>
+</ion-content>
