@@ -1,30 +1,47 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Login simple</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-item>
-    <ion-label position="stacked">Usuario</ion-label>
-    <ion-input [(ngModel)]="usuario" name="usuario" placeholder="admin"></ion-input>
-  </ion-item>
+<ion-content class="ion-padding page-bg">
 
-  <ion-item>
-    <ion-label position="stacked">Contraseña</ion-label>
-    <ion-input [(ngModel)]="password" name="password" type="password" placeholder="1234"></ion-input>
-  </ion-item>
+  <ion-card class="app-card wide">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="lock-closed-outline"></ion-icon> Iniciar sesión
+      </ion-card-title>
+      <ion-card-subtitle>Usuario demo: <code>admin</code> / <code>1234</code></ion-card-subtitle>
+    </ion-card-header>
 
-  <div class="ion-padding-top">
-    <ion-button expand="block" (click)="ingresar()">Ingresar</ion-button>
-    <ion-button expand="block" fill="outline" color="medium" (click)="limpiar()">Limpiar</ion-button>
-  </div>
+    <ion-card-content>
+      <ion-item class="soft-item">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label position="stacked">Usuario</ion-label>
+        <ion-input [(ngModel)]="usuario" name="usuario" placeholder="admin"></ion-input>
+      </ion-item>
 
-  <ion-item *ngIf="mensajeOk" color="success" class="ion-margin-top">
-    <ion-label>{{ mensajeOk }}</ion-label>
-  </ion-item>
+      <ion-item class="soft-item ion-margin-top">
+        <ion-icon name="key-outline" slot="start"></ion-icon>
+        <ion-label position="stacked">Contraseña</ion-label>
+        <ion-input [(ngModel)]="password" name="password" type="password" placeholder="1234"></ion-input>
+      </ion-item>
 
-  <ion-item *ngIf="mensajeErr" color="danger" class="ion-margin-top">
-    <ion-label>{{ mensajeErr }}</ion-label>
-  </ion-item>
+      <div class="actions">
+        <ion-button expand="block" (click)="ingresar()">Ingresar</ion-button>
+        <ion-button expand="block" fill="outline" color="medium" (click)="limpiar()">Limpiar</ion-button>
+      </div>
+
+      <ion-item *ngIf="mensajeOk" color="success" class="soft-item ion-margin-top">
+        <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+        <ion-label>{{ mensajeOk }}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="mensajeErr" color="danger" class="soft-item ion-margin-top">
+        <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
+        <ion-label>{{ mensajeErr }}</ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

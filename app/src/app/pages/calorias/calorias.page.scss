@@ -1,0 +1,13 @@
+.page-bg { --background: var(--ion-color-light); }
+.app-card { border-radius: 16px; }
+.soft-item { --background: var(--ion-color-light); border-radius: 12px; }
+.actions { margin-top: 16px; display: grid; gap: 10px; }
+.result .big { font-size: 1.3rem; font-weight: 700; }
+
+.grid {
+  display: grid;
+  gap: 12px;
+}
+@media (min-width: 540px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}

@@ -1,27 +1,16 @@
-#container {
-  text-align: center;
+.page-bg { --background: var(--ion-color-light); }
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+.app-card { border-radius: 16px; overflow: hidden; }
+.soft-item {
+  --inner-padding-start: 12px;
+  --inner-padding-end: 12px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --background: var(--ion-color-light);
+  border-radius: 12px;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+.grid-buttons {
+  display: grid;
+  gap: 12px;
 }

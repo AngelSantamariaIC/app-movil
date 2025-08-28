@@ -1,0 +1,6 @@
+.page-bg { --background: var(--ion-color-light); }
+.app-card { border-radius: 16px; }
+.app-card.wide { max-width: 560px; margin: 0 auto; }
+.soft-item { --background: var(--ion-color-light); border-radius: 12px; }
+.actions { margin-top: 16px; display: grid; gap: 10px; }
+ion-card-title ion-icon { margin-right: 8px; }

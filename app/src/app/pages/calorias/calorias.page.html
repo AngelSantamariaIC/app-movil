@@ -1,31 +1,48 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Gasto calórico (TMB)</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-item>
-    <ion-label position="stacked">Peso (kg)</ion-label>
-    <ion-input type="number" inputmode="decimal" [(ngModel)]="peso" name="peso" placeholder="Ej: 70"></ion-input>
-  </ion-item>
+<ion-content class="ion-padding page-bg">
 
-  <ion-item>
-    <ion-label position="stacked">Altura (cm)</ion-label>
-    <ion-input type="number" inputmode="decimal" [(ngModel)]="altura" name="altura" placeholder="Ej: 175"></ion-input>
-  </ion-item>
+  <ion-card class="app-card">
+    <ion-card-header>
+      <ion-card-title>Datos personales</ion-card-title>
+      <ion-card-subtitle>Completa los campos</ion-card-subtitle>
+    </ion-card-header>
 
-  <ion-item>
-    <ion-label position="stacked">Edad (años)</ion-label>
-    <ion-input type="number" inputmode="numeric" [(ngModel)]="edad" name="edad" placeholder="Ej: 30"></ion-input>
-  </ion-item>
+    <ion-card-content>
+      <div class="grid">
+        <ion-item class="soft-item">
+          <ion-label position="stacked">Peso (kg)</ion-label>
+          <ion-input type="number" inputmode="decimal" [(ngModel)]="peso" name="peso" placeholder="Ej: 70"></ion-input>
+        </ion-item>
 
-  <div class="ion-padding-top">
-    <ion-button expand="block" (click)="calcular()">Calcular gasto calórico</ion-button>
-    <ion-button expand="block" fill="outline" color="medium" (click)="limpiar()">Limpiar</ion-button>
-  </div>
+        <ion-item class="soft-item">
+          <ion-label position="stacked">Altura (cm)</ion-label>
+          <ion-input type="number" inputmode="decimal" [(ngModel)]="altura" name="altura" placeholder="Ej: 175"></ion-input>
+        </ion-item>
 
-  <ion-item class="ion-padding-top">
-    <ion-label><div>{{ resultado || '—' }}</div></ion-label>
-  </ion-item>
+        <ion-item class="soft-item">
+          <ion-label position="stacked">Edad (años)</ion-label>
+          <ion-input type="number" inputmode="numeric" [(ngModel)]="edad" name="edad" placeholder="Ej: 30"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="actions">
+        <ion-button expand="block" (click)="calcular()">
+          <ion-icon name="flame-outline" slot="start"></ion-icon>
+          Calcular gasto calórico
+        </ion-button>
+        <ion-button expand="block" fill="outline" color="medium" (click)="limpiar()">Limpiar</ion-button>
+      </div>
+
+      <ion-item class="soft-item ion-margin-top result">
+        <ion-icon name="fitness-outline" slot="start"></ion-icon>
+        <ion-label><div class="big">{{ resultado || '—' }}</div></ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
