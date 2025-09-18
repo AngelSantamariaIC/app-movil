@@ -1,0 +1,14 @@
+[
+{"nombre":"Alejandra","sexo":"Femenino","activo":true},
+{"nombre":"Matteo","sexo":"Masculino","activo": true},
+{"nombre":"Angel","sexo":"Masculino","activo": false},
+{"nombre":"Casper","sexo":"Femenino","activo": false},
+{"nombre":"Johana","sexo":"Femenino","activo": true},
+{"nombre":"Steven","sexo":"Masculino","activo":true},
+{"nombre":"Ana","sexo":"Femenino","activo": false},
+{"nombre":"Hernando","sexo":"Masculino","activo": false},
+{"nombre":"Betty","sexo":"Femenino","activo": false},
+{"nombre":"Fanny","sexo":"Femenino","activo": true},
+{"nombre":"Mathias","sexo":"Masculino","activo": false}
+
+]

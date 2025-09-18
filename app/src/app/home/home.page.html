@@ -46,4 +46,17 @@
     </ion-card-content>
   </ion-card>
 
+  <h2>Empleados</h2>
+  <ion-list *ngIf="empleados.length > 0">
+    <ion-item *ngFor="let emp of empleados; let i =index">
+      <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+      <ion-label>
+        <h2>{{ emp.nombre }}</h2>
+        <p>Sexo: {{ emp.sexo }} - Activo: {{ emp.activo ? 'Sí' : 'No' }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ng-template [ngIf]="empleados.length === 0">
+    <p>No hay empleados para mostrar.</p>
+  </ng-template>
 </ion-content>
