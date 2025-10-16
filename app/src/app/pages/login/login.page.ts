@@ -20,10 +20,10 @@ export class LoginPage {
 
   async doLogin() {
     this.loading = true;
-    this.http.post<{access_token:string}>('http://localhost:8080/auth/login', { username: this.username, password: this.password })
+    this.http.post<{token:string}>('http://localhost:8080/auth/login', { username: this.username, password: this.password })
       .subscribe({
         next: async (res) => {
-          localStorage.setItem('token', res.access_token);
+          localStorage.setItem('token', res.token);
           this.loading = false;
           this.router.navigateByUrl('/admin', { replaceUrl: true });
         },

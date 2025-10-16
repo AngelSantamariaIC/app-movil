@@ -27,6 +27,7 @@ export class EmpleadosService {
   }
 
   delete(id: number): Observable<void> {
+    console.log('token:', localStorage.getItem('token'));
     return this.http.delete<void>(`${this.base}/${id}`);
   }
 }
