@@ -1,0 +1,116 @@
+/* 🎨 Fondo general dinámico */
+:host {
+  --page-bg: var(--ion-background-color);
+  --card-bg: var(--ion-card-background);
+  --item-bg: var(--ion-item-background, var(--ion-card-background));
+  --text-color: var(--ion-text-color);
+}
+
+ion-content {
+  --background: var(--page-bg);
+}
+
+/* 📦 Tarjetas del formulario */
+ion-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: background 0.3s;
+}
+
+ion-card-title {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+ion-card-subtitle {
+  color: var(--ion-color-medium);
+  font-size: 0.9rem;
+}
+
+/* 🧾 Lista de empleados */
+ion-list {
+  background: transparent;
+}
+
+ion-item {
+  border-radius: 12px;
+  margin: 6px 0;
+  --background: var(--item-bg);
+  --color: var(--text-color);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+ion-item h2 {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+ion-badge {
+  font-size: 0.8rem;
+  margin-left: 8px;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+/* 👤 Avatares */
+.avatar-initials {
+  background: var(--ion-color-primary);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* 📭 Estado vacío */
+.empty-state {
+  text-align: center;
+  margin: 40px 0;
+  color: var(--ion-color-medium);
+}
+
+.empty-state ion-icon {
+  font-size: 4rem;
+  margin-bottom: 10px;
+  opacity: 0.6;
+}
+
+/* 🧪 Input & buttons */
+ion-input, ion-select {
+  --background: transparent;
+  --color: var(--text-color);
+}
+
+ion-button {
+  --border-radius: 12px;
+  font-weight: 500;
+}
+
+ion-button[color="danger"] {
+  --background: var(--ion-color-danger);
+  --background-activated: var(--ion-color-danger-shade);
+}
+
+/* ⚙️ Búsqueda */
+ion-searchbar {
+  --background: var(--item-bg);
+  --color: var(--text-color);
+  margin: 12px 0;
+  border-radius: 12px;
+}
+
+/* 📱 Responsivo */
+@media (min-width: 768px) {
+  ion-card {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}

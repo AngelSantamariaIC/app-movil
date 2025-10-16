@@ -1,0 +1,140 @@
+/* Usa variables de Ionic que cambian según el tema */
+:host {
+  --page-bg: var(--ion-background-color);
+  --item-bg: var(--ion-item-background, var(--ion-card-background));
+  --text-color: var(--ion-text-color);
+  --muted: var(--ion-color-medium);
+}
+
+ion-content {
+  --background: var(--page-bg);
+}
+
+/* Barra de búsqueda */
+ion-searchbar {
+  --background: var(--item-bg);
+  --color: var(--text-color);
+  margin: 12px 12px 4px;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.06);
+}
+
+/* Lista */
+ion-list {
+  background: transparent;
+  padding: 0 8px;
+}
+
+ion-item {
+  --background: var(--item-bg);
+  --color: var(--text-color);
+  margin: 6px 4px;
+  border-radius: 14px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.06);
+  transition: transform .12s ease-out, box-shadow .12s ease-out;
+
+  &:active {
+    transform: scale(.995);
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  }
+}
+
+/* Título + badge de género */
+.emp-name {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 600;
+}
+
+/* Avatar con iniciales */
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ion-color-primary);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(0,0,0,.18);
+  user-select: none; /* evita selección al hacer scroll */
+}
+
+.avatar-initials {
+  font-weight: 700;
+  letter-spacing: .4px;
+  font-size: .95rem;
+}
+
+/* Chip fecha de nacimiento al extremo derecho */
+ion-chip[slot="end"] {
+  --background: transparent;
+  border: 1px solid color-mix(in oklab, var(--ion-color-primary) 35%, transparent);
+  border-radius: 10px;
+}
+
+/* Skeletons */
+ion-skeleton-text[animated] {
+  border-radius: 8px;
+}
+
+/* Empty state */
+.empty-state {
+  margin: 10vh 16px 0;
+  text-align: center;
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  gap: .5rem;
+
+  ion-icon {
+    font-size: 64px;
+    color: var(--ion-color-primary);
+    opacity: .6;
+  }
+
+  h3 {
+    color: var(--text-color);
+    margin: .25rem 0;
+    font-weight: 600;
+  }
+
+  p { margin: 0 0 1rem; }
+}
+
+/* Tarjeta de creación inline (si la usas en esta vista) */
+ion-card {
+  background: var(--item-bg);
+  border-radius: 16px;
+  margin: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+ion-card-title, ion-card-subtitle {
+  color: var(--text-color);
+}
+
+/* Botón FAB “+” */
+ion-fab-button {
+  --border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.18);
+}
+
+/* Pequeñas mejoras de tipografía */
+ion-label p {
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Responsive: centra la tarjeta/inputs en pantallas grandes */
+@media (min-width: 768px) {
+  ion-card {
+    max-width: 620px;
+    margin: 16px auto;
+  }
+
+  ion-list {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+}

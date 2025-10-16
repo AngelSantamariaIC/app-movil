@@ -1,6 +1,62 @@
-<ion-header><ion-toolbar><ion-title>Iniciar sesión</ion-title></ion-toolbar></ion-header>
-<ion-content class="ion-padding">
-  <ion-item><ion-input label="Usuario" labelPlacement="stacked" [(ngModel)]="username"></ion-input></ion-item>
-  <ion-item><ion-input label="Contraseña" type="password" labelPlacement="stacked" [(ngModel)]="password"></ion-input></ion-item>
-  <ion-button expand="block" (click)="doLogin()" [disabled]="loading">Entrar</ion-button>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Iniciar sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="login-wrapper">
+
+  <ion-card class="login-card">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        Acceso administrador
+      </ion-card-title>
+      <ion-card-subtitle>Ingresa tus credenciales para continuar</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- Usuario -->
+      <ion-item class="soft dense">
+        <ion-input
+          label="Usuario"
+          labelPlacement="stacked"
+          [(ngModel)]="username"
+          autocomplete="username"
+          required>
+          <ion-icon slot="start" name="person-outline"></ion-icon>
+        </ion-input>
+      </ion-item>
+
+      <!-- Contraseña + toggle -->
+      <ion-item class="soft dense">
+        <ion-input
+          label="Contraseña"
+          labelPlacement="stacked"
+          [type]="showPwd ? 'text' : 'password'"
+          [(ngModel)]="password"
+          autocomplete="current-password"
+          required>
+          <ion-icon slot="start" name="key-outline"></ion-icon>
+          <ion-button slot="end" fill="clear" size="small" (click)="showPwd = !showPwd">
+            <ion-icon [name]="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+          </ion-button>
+        </ion-input>
+      </ion-item>
+
+      <!-- Recordarme -->
+      <div class="row-between">
+        <ion-toggle justify="start" [(ngModel)]="remember" size="small">Recordarme</ion-toggle>
+        <a class="light-link" routerLink="/">Volver al inicio</a>
+      </div>
+
+      <!-- Botón -->
+      <ion-button expand="block" size="default" class="submit-btn"
+                  (click)="doLogin()" [disabled]="loading || !username || !password">
+        <ion-spinner *ngIf="loading" name="lines-small" class="ion-margin-end"></ion-spinner>
+        {{ loading ? 'Ingresando…' : 'Entrar' }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

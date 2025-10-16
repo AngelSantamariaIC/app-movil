@@ -1,22 +1,120 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Lista de Empleados</ion-title>
+    <ion-title>Empleados</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" routerLink="/admin">
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-spinner *ngIf="loading"></ion-spinner>
+<ion-content>
 
-  <ion-list *ngIf="!loading && empleados.length > 0">
-    <ion-item *ngFor="let e of empleados">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- BÚSQUEDA -->
+  <ion-searchbar placeholder="Buscar por nombre o #"
+                 debounce="200"
+                 (ionInput)="onSearch($event)"></ion-searchbar>
+
+  <!-- FORM CREACIÓN INLINE -->
+  <ion-card *ngIf="showCreate" class="ion-margin">
+    <ion-card-header>
+      <ion-card-title>Nuevo empleado</ion-card-title>
+      <ion-card-subtitle>Completa los campos</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col sizeMd="6" size="12">
+            <ion-item><ion-input label="Nombres" labelPlacement="stacked" [(ngModel)]="nuevo.first_name" required></ion-input></ion-item>
+          </ion-col>
+          <ion-col sizeMd="6" size="12">
+            <ion-item><ion-input label="Apellidos" labelPlacement="stacked" [(ngModel)]="nuevo.last_name" required></ion-input></ion-item>
+          </ion-col>
+          <ion-col sizeMd="4" size="12">
+            <ion-item><ion-input label="Nacimiento (YYYY-MM-DD)" labelPlacement="stacked" [(ngModel)]="nuevo.birth_date" required></ion-input></ion-item>
+          </ion-col>
+          <ion-col sizeMd="4" size="12">
+            <ion-item><ion-input label="Ingreso (YYYY-MM-DD)" labelPlacement="stacked" [(ngModel)]="nuevo.hire_date" required></ion-input></ion-item>
+          </ion-col>
+          <ion-col sizeMd="4" size="12">
+            <ion-item>
+              <ion-select label="Género" labelPlacement="stacked" [(ngModel)]="nuevo.gender">
+                <ion-select-option value="M">Masculino</ion-select-option>
+                <ion-select-option value="F">Femenino</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-button expand="block" color="primary" [disabled]="creating"
+                  (click)="crearEmpleado()">
+        {{ creating ? 'Creando...' : 'Crear' }}
+      </ion-button>
+      <ion-button expand="block" fill="clear" (click)="showCreate=false">Cancelar</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Skeleton loading -->
+  <ion-list *ngIf="loading">
+    <ion-item *ngFor="let i of [1,2,3,4,5]">
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated style="width:40px; height:40px; border-radius:50%"></ion-skeleton-text>
+      </ion-avatar>
       <ion-label>
-      <h2>{{ e.first_name }} {{ e.last_name }}</h2>
-      <p>N° Empleado: {{ e.emp_no }} | Fecha ingreso: {{ e.hire_date }}</p>
-    </ion-label>
+        <h3><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></h3>
+        <p><ion-skeleton-text animated style="width: 40%"></ion-skeleton-text></p>
+      </ion-label>
     </ion-item>
   </ion-list>
 
-  <ion-text color="medium" *ngIf="!loading && empleados.length === 0">
-    No hay empleados registrados.
-  </ion-text>
+  <!-- Lista -->
+  <ion-list *ngIf="!loading && empleados?.length">
+    <ion-item-sliding *ngFor="let e of empleados; trackBy: trackById">
+      <ion-item>
+        <ion-avatar slot="start" class="avatar">
+          <div class="avatar-initials">{{ initials(e.first_name, e.last_name) }}</div>
+        </ion-avatar>
+        <ion-label>
+          <h2 class="emp-name">
+            {{ e.first_name }} {{ e.last_name }}
+            <ion-badge [color]="e.gender === 'M' ? 'primary' : 'tertiary'" class="ml-2">
+              {{ e.gender === 'M' ? 'M' : 'F' }}
+            </ion-badge>
+          </h2>
+          <p>#{{ e.emp_no }} · Ingreso {{ e.hire_date | date:'yyyy-MM-dd' }}</p>
+        </ion-label>
+        <ion-chip slot="end" color="secondary" outline>
+          <ion-icon name="calendar-outline"></ion-icon>
+          <ion-label>{{ e.birth_date | date:'yyyy-MM-dd' }}</ion-label>
+        </ion-chip>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="confirmEliminar(e.emp_no)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <!-- Empty -->
+  <div *ngIf="!loading && (!empleados || !empleados.length)" class="empty-state">
+    <ion-icon name="people-outline"></ion-icon>
+    <h3>Sin registros</h3>
+    <p>Aún no hay empleados para mostrar.</p>
+  </div>
+
+  <!-- FAB: ahora abre/contrae el formulario o pide login -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="toggleCreateOrLogin()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

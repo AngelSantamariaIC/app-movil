@@ -1,38 +1,167 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Gestión de Empleados</ion-title>
-    <ion-buttons slot="end"><ion-button (click)="salir()">Salir</ion-button></ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="salir()">Salir</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-card>
-    <ion-card-header><ion-card-title>Nuevo</ion-card-title></ion-card-header>
-    <ion-card-content class="grid">
-      <ion-item><ion-input label="Nombres" [(ngModel)]="nuevo.first_name"></ion-input></ion-item>
-      <ion-item><ion-input label="Apellidos" [(ngModel)]="nuevo.last_name"></ion-input></ion-item>
-      <ion-item><ion-input label="Nacimiento (YYYY-MM-DD)" [(ngModel)]="nuevo.birth_date"></ion-input></ion-item>
-      <ion-item><ion-input label="Ingreso (YYYY-MM-DD)" [(ngModel)]="nuevo.hire_date"></ion-input></ion-item>
-      <ion-item>
-        <ion-select label="Género" [(ngModel)]="nuevo.gender">
-          <ion-select-option value="M">Masculino</ion-select-option>
-          <ion-select-option value="F">Femenino</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-button (click)="crear()">Crear</ion-button>
+
+  <!-- Pull to refresh -->
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Formulario de creación -->
+  <ion-card class="ion-margin">
+    <ion-card-header>
+      <ion-card-title>Nuevo</ion-card-title>
+      <ion-card-subtitle>Completa los campos requeridos</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col sizeMd="6" size="12">
+            <ion-item>
+              <ion-input
+                label="Nombres"
+                labelPlacement="stacked"
+                [(ngModel)]="nuevo.first_name"
+                required
+                [helperText]="!nuevo.first_name ? 'Requerido' : ''">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col sizeMd="6" size="12">
+            <ion-item>
+              <ion-input
+                label="Apellidos"
+                labelPlacement="stacked"
+                [(ngModel)]="nuevo.last_name"
+                required
+                [helperText]="!nuevo.last_name ? 'Requerido' : ''">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col sizeMd="4" size="12">
+            <ion-item>
+              <ion-input
+                type="date"
+                label="Nacimiento"
+                labelPlacement="stacked"
+                [(ngModel)]="nuevo.birth_date"
+                required
+                [helperText]="!nuevo.birth_date ? 'YYYY-MM-DD' : ''">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col sizeMd="4" size="12">
+            <ion-item>
+              <ion-input
+                type="date"
+                label="Ingreso"
+                labelPlacement="stacked"
+                [(ngModel)]="nuevo.hire_date"
+                required
+                [helperText]="!nuevo.hire_date ? 'YYYY-MM-DD' : ''">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col sizeMd="4" size="12">
+            <ion-item>
+              <ion-select
+                label="Género"
+                labelPlacement="stacked"
+                [(ngModel)]="nuevo.gender">
+                <ion-select-option value="M">Masculino</ion-select-option>
+                <ion-select-option value="F">Femenino</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-button
+        expand="block"
+        color="primary"
+        [disabled]="creating || !nuevo.first_name || !nuevo.last_name || !nuevo.birth_date || !nuevo.hire_date"
+        (click)="crear()">
+        {{ creating ? 'Creando…' : 'Crear' }}
+      </ion-button>
     </ion-card-content>
   </ion-card>
 
-  <ion-list>
-    <ion-list-header>Registros</ion-list-header>
-    <ion-spinner *ngIf="loading"></ion-spinner>
-    <ion-item *ngFor="let e of empleados">
+  <!-- Búsqueda -->
+  <ion-searchbar
+    placeholder="Buscar por nombre o # empleado"
+    debounce="200"
+    (ionInput)="onSearch($event)">
+  </ion-searchbar>
+
+  <!-- Skeletons -->
+  <ion-list *ngIf="loading">
+    <ion-item *ngFor="let i of [1,2,3,4,5]">
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated style="width:40px; height:40px; border-radius:50%"></ion-skeleton-text>
+      </ion-avatar>
       <ion-label>
-        <h2>{{ e.first_name }} {{ e.last_name }}</h2>
-        <p>#{{ e.emp_no }} — Ingreso: {{ e.hire_date }}</p>
+        <h3><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></h3>
+        <p><ion-skeleton-text animated style="width: 40%"></ion-skeleton-text></p>
       </ion-label>
-      <ion-button color="danger" slot="end" (click)="eliminar(e.emp_no)">Eliminar</ion-button>
     </ion-item>
-    <ion-text color="medium" *ngIf="!loading && empleados.length===0">Sin registros</ion-text>
   </ion-list>
+
+  <!-- Lista con deslizar para eliminar -->
+  <ion-list *ngIf="!loading && empleados?.length">
+    <ion-list-header>Registros</ion-list-header>
+
+    <ion-item-sliding *ngFor="let e of empleados; trackBy: trackById">
+      <ion-item>
+        <ion-avatar slot="start" class="avatar">
+          <div class="avatar-initials">{{ ((e.first_name?.[0]||'') + (e.last_name?.[0]||'')).toUpperCase() }}</div>
+        </ion-avatar>
+
+        <ion-label>
+          <h2>
+            {{ e.first_name }} {{ e.last_name }}
+            <ion-badge [color]="e.gender === 'M' ? 'primary' : 'tertiary'" class="ml-2">
+              {{ e.gender }}
+            </ion-badge>
+          </h2>
+          <p>#{{ e.emp_no }} — Ingreso: {{ e.hire_date | date:'yyyy-MM-dd' }}</p>
+        </ion-label>
+
+        <ion-button color="danger" slot="end" (click)="eliminar(e.emp_no)">Eliminar</ion-button>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="eliminar(e.emp_no)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <!-- Empty state -->
+  <div *ngIf="!loading && (!empleados || !empleados.length)" class="empty-state">
+    <ion-icon name="people-outline"></ion-icon>
+    <h3>Sin registros</h3>
+    <p>Aún no hay empleados para mostrar.</p>
+  </div>
+
+  <!-- Controles de paginación -->
+  <ion-button expand="block" fill="clear" (click)="load(true)">
+    Refrescar
+  </ion-button>
+  <ion-button expand="block" [disabled]="loading" (click)="verMas()">
+    Cargar más
+  </ion-button>
+
 </ion-content>
