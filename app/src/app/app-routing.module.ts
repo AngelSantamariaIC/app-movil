@@ -12,17 +12,13 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'temperatura',
-    loadChildren: () => import('./pages/temperatura/temperatura.module').then( m => m.TemperaturaPageModule)
-  },
-  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'calorias',
-    loadChildren: () => import('./pages/calorias/calorias.module').then( m => m.CaloriasPageModule)
-  },
+    path: 'empleados',
+    loadChildren: () => import('./pages/empleados/empleados.module').then( m => m.EmpleadosPage)
+  }
 ];
 
 @NgModule({

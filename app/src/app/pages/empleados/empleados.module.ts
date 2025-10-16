@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
 
-import { TemperaturaPageRoutingModule } from './temperatura-routing.module';
-
-import { TemperaturaPage } from './temperatura.page';
+import { EmpleadosPageRoutingModule } from './empleados-routing.module';
+import { EmpleadosPage } from './empleados.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TemperaturaPageRoutingModule
+    EmpleadosPageRoutingModule
   ],
-  declarations: [TemperaturaPage]
+  declarations: [EmpleadosPage]
 })
-export class TemperaturaPageModule {}
+export class EmpleadosPageModule {}

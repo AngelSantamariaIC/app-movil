@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Lista de Empleados</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-spinner *ngIf="loading"></ion-spinner>
+
+  <ion-list *ngIf="!loading && empleados.length > 0">
+    <ion-item *ngFor="let e of empleados">
+      <ion-label>
+        <h2>{{ e.nombre }}</h2>
+        <p>{{ e.cargo }} - ${{ e.salario }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-text color="medium" *ngIf="!loading && empleados.length === 0">
+    No hay empleados registrados.
+  </ion-text>
+</ion-content>
