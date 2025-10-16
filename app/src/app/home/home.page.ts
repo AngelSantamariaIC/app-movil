@@ -1,45 +1,25 @@
-import { Component } from '@angular/core';
-
-import { Empleado } from '../modelos/empleado';
-import { HttpClientModule,HttpClient } from '@angular/common/http';
-import { finalize } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
-  standalone: false,
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  standalone: true,
+  imports: [CommonModule, IonicModule, RouterLink],
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
 })
-export class HomePage {
-  mensaje = 'Aún no has hecho clic';
-  clics = 0;
-  saludar() {
-    this.clics++;
-    this.mensaje = `¡Hola! Has hecho clic ${this.clics} vez${this.clics === 1 ? '' : 'es'}.`;
+export class HomePage implements OnInit {
+  loading = true;
+  empleados: any[] = [];
+  constructor(private http: HttpClient) {}
+  ngOnInit() {
+    this.http.get<any[]>('http://localhost:8080/employees?limit=20&offset=0')
+      .subscribe({ next: d => { this.empleados = d ?? []; this.loading = false; },
+                   error: _ => { this.empleados = []; this.loading = false; }});
   }
-
-
-empleados: Empleado[] = [];
-loading=true;
-constructor(private http: HttpClient){}
-
-ngOnInit(){
-    this.http.get<Empleado[]>('assets/empleados.json')
-    .pipe(
-      finalize(() => this.loading = false)
-    )
-    .subscribe({
-      next: (data) => {
-        this.empleados = data ?? [];
-        console.log('this.empleados', this.empleados);
-      },
-      error: (err) => {
-        console.error('Error cargando empleados:', err);
-        this.empleados = [];
-      }
-      
-    });
-}
 }
 
 

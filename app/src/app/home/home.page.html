@@ -1,62 +1,22 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Mi App de Ejercicios</ion-title>
+  <ion-toolbar>
+    <ion-title>Esta es la aplicación telemática de Angel Daniel Santamaria</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding page-bg">
+<ion-content class="ion-padding">
+  <p>App académica en Ionic para registrar, borrar y consultar datos de empleados.</p>
+  <ion-button routerLink="/login">Iniciar sesión</ion-button>
 
-  <ion-card class="app-card">
-    <ion-card-header>
-      <ion-card-title>Demo rápido</ion-card-title>
-      <ion-card-subtitle>Prueba el botón</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-button expand="block" size="large" (click)="saludar()">
-        <ion-icon name="hand-left-outline" slot="start"></ion-icon>
-        Haz clic
-      </ion-button>
-
-      <ion-item class="ion-margin-top soft-item">
-        <ion-icon name="chatbubble-ellipses-outline" slot="start"></ion-icon>
-        <ion-label>{{ mensaje }}</ion-label>
-        <ion-badge color="tertiary">{{ clics }}</ion-badge>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card class="app-card">
-    <ion-card-header>
-      <ion-card-title>Ejercicios</ion-card-title>
-      <ion-card-subtitle>Elige una pantalla</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content class="grid-buttons">
-      <ion-button routerLink="/temperatura" fill="solid">
-        <ion-icon name="thermometer-outline" slot="start"></ion-icon>
-        Conversor de temperaturas
-      </ion-button>
-      <ion-button routerLink="/login" fill="solid" color="secondary">
-        <ion-icon name="log-in-outline" slot="start"></ion-icon>
-        Login con validación
-      </ion-button>
-      <ion-button routerLink="/calorias" fill="solid" color="tertiary">
-        <ion-icon name="flame-outline" slot="start"></ion-icon>
-        Gasto calórico (TMB)
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
-
-  <h2>Empleados</h2>
-  <ion-list *ngIf="empleados.length > 0">
-    <ion-item *ngFor="let emp of empleados; let i =index">
-      <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+  <ion-list class="ion-margin-top">
+    <ion-list-header>Registros públicos</ion-list-header>
+    <ion-spinner *ngIf="loading"></ion-spinner>
+    <ion-item *ngFor="let e of empleados">
       <ion-label>
-        <h2>{{ emp.nombre }}</h2>
-        <p>Sexo: {{ emp.sexo }} - Activo: {{ emp.activo ? 'Sí' : 'No' }}</p>
+        <h2>{{ e.first_name }} {{ e.last_name }}</h2>
+        <p>#{{ e.emp_no }} — Ingreso: {{ e.hire_date }}</p>
       </ion-label>
     </ion-item>
+    <ion-text color="medium" *ngIf="!loading && empleados.length===0">No hay registros.</ion-text>
   </ion-list>
-  <ng-template [ngIf]="empleados.length === 0">
-    <p>No hay empleados para mostrar.</p>
-  </ng-template>
 </ion-content>

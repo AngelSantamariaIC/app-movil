@@ -1,31 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, IonicModule],
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  usuario = '';
+  username = '';
   password = '';
-  mensajeOk = '';
-  mensajeErr = '';
+  loading = false;
 
-  ingresar() {
-    if (this.usuario === 'admin' && this.password === '1234') {
-      this.mensajeOk = `Bienvenido, ${this.usuario}`;
-      this.mensajeErr = '';
-    } else {
-      this.mensajeErr = 'Credenciales incorrectas.';
-      this.mensajeOk = '';
-    }
-  }
+  constructor(private http: HttpClient, private router: Router, private toast: ToastController) {}
 
-  limpiar() {
-    this.usuario = '';
-    this.password = '';
-    this.mensajeOk = '';
-    this.mensajeErr = '';
+  async doLogin() {
+    this.loading = true;
+    this.http.post<{access_token:string}>('http://localhost:8080/auth/login', { username: this.username, password: this.password })
+      .subscribe({
+        next: async (res) => {
+          localStorage.setItem('token', res.access_token);
+          this.loading = false;
+          this.router.navigateByUrl('/admin', { replaceUrl: true });
+        },
+        error: async () => {
+          this.loading = false;
+          const t = await this.toast.create({ message: 'Credenciales inválidas', color: 'danger', duration: 2000 });
+          t.present();
+        }
+      });
   }
 }

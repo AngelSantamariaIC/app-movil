@@ -18,9 +18,19 @@ const routes: Routes = [
       import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
+    path: 'admin',
+    loadChildren: () =>
+      import('./pages/admin/admin.module').then(m => m.AdminPageModule)
+
+  },
+  {
     path: 'empleados',
     loadChildren: () =>
       import('./pages/empleados/empleados.module').then(m => m.EmpleadosPageModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule)
   }
 ];
 

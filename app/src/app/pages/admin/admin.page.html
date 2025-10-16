@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Gestión de Empleados</ion-title>
+    <ion-buttons slot="end"><ion-button (click)="salir()">Salir</ion-button></ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header><ion-card-title>Nuevo</ion-card-title></ion-card-header>
+    <ion-card-content class="grid">
+      <ion-item><ion-input label="Nombres" [(ngModel)]="nuevo.first_name"></ion-input></ion-item>
+      <ion-item><ion-input label="Apellidos" [(ngModel)]="nuevo.last_name"></ion-input></ion-item>
+      <ion-item><ion-input label="Nacimiento (YYYY-MM-DD)" [(ngModel)]="nuevo.birth_date"></ion-input></ion-item>
+      <ion-item><ion-input label="Ingreso (YYYY-MM-DD)" [(ngModel)]="nuevo.hire_date"></ion-input></ion-item>
+      <ion-item>
+        <ion-select label="Género" [(ngModel)]="nuevo.gender">
+          <ion-select-option value="M">Masculino</ion-select-option>
+          <ion-select-option value="F">Femenino</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button (click)="crear()">Crear</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-list-header>Registros</ion-list-header>
+    <ion-spinner *ngIf="loading"></ion-spinner>
+    <ion-item *ngFor="let e of empleados">
+      <ion-label>
+        <h2>{{ e.first_name }} {{ e.last_name }}</h2>
+        <p>#{{ e.emp_no }} — Ingreso: {{ e.hire_date }}</p>
+      </ion-label>
+      <ion-button color="danger" slot="end" (click)="eliminar(e.emp_no)">Eliminar</ion-button>
+    </ion-item>
+    <ion-text color="medium" *ngIf="!loading && empleados.length===0">Sin registros</ion-text>
+  </ion-list>
+</ion-content>
