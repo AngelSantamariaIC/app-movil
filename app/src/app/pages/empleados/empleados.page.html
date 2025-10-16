@@ -10,9 +10,9 @@
   <ion-list *ngIf="!loading && empleados.length > 0">
     <ion-item *ngFor="let e of empleados">
       <ion-label>
-        <h2>{{ e.nombre }}</h2>
-        <p>{{ e.cargo }} - ${{ e.salario }}</p>
-      </ion-label>
+      <h2>{{ e.first_name }} {{ e.last_name }}</h2>
+      <p>N° Empleado: {{ e.emp_no }} | Fecha ingreso: {{ e.hire_date }}</p>
+    </ion-label>
     </ion-item>
   </ion-list>
 

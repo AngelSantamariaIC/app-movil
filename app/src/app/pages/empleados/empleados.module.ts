@@ -11,8 +11,8 @@ import { EmpleadosPage } from './empleados.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    EmpleadosPageRoutingModule
+    EmpleadosPageRoutingModule,
+    EmpleadosPage
   ],
-  declarations: [EmpleadosPage]
 })
 export class EmpleadosPageModule {}
