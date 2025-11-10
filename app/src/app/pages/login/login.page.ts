@@ -14,6 +14,7 @@ const API_BASE = 'http://localhost:8080';
   standalone: true,
   imports: [CommonModule, FormsModule, IonicModule],
   templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
   username = '';
@@ -75,8 +76,9 @@ export class LoginPage {
           message: 'Bienvenido 👋',
           duration: 900,
         })).present();
+        this.router.navigateByUrl('/dashboard/tab1', { replaceUrl: true });
 
-        this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
+        // this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
       },
       error: async (err: HttpErrorResponse) => {
         let msg = 'Credenciales inválidas';

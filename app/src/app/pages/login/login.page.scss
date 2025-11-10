@@ -1,5 +1,6 @@
 /* En login.page.scss */
 
+/* --- Estilos Globales de la Página --- */
 ion-header {
   ion-toolbar {
     --background: transparent; // Fondo transparente en el header
@@ -7,36 +8,12 @@ ion-header {
   }
 }
 
-/* En login.page.scss */
+// ion-content {
+//   --background: #f8f8f8; // Un color de fondo muy suave
+//   font-family: 'Poppins', sans-serif;
+// }
 
-ion-item {
-  --background: #ffffff; // <-- Fondo blanco
-  --border-radius: 10px;
-  --border-color: #e0e0e0; // Un borde gris muy sutil
-  --highlight-color-focused: var(--ion-color-primary); // Borde de tu color primario al enfocar
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); // Sombra sutil
-  margin-bottom: 10px;
-  
-  ion-label {
-    font-size: 0.9em;
-    font-weight: 500;
-    color: #888; // Color de la etiqueta
-  }
-  ion-input {
-    font-size: 1.1em;
-    color: #333; // Color del texto que escribes
-  }
-  ion-icon {
-    color: #ccc; // Color de los íconos
-    font-size: 1.3em;
-  }
-}
-
-ion-content {
-  --background: #f8f8f8; // Un color de fondo muy suave
-  font-family: 'Poppins', sans-serif; // Asumiendo que usas Poppins
-}
-
+/* --- Sección de Títulos --- */
 .header-section {
   text-align: left;
   margin-top: 10px;
@@ -65,45 +42,53 @@ ion-content {
   }
 }
 
+/* --- Campos del Formulario (Inputs) --- */
 ion-item {
-  --background: #ffffff;
+  --background: #ffffff; /* Fondo gris oscuro */
   --border-radius: 10px;
-  --highlight-color-focused: var(--ion-color-primary); // Borde azul al enfocar
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); // Sombra sutil
-  margin-bottom: 10px; // Espacio entre items
+  --border-color: transparent; /* Sin borde */
+  --highlight-color-focused: var(--ion-color-primary); // Borde cian al enfocar
+  box-shadow: none; // Quitamos la sombra que tenía antes
+  margin-bottom: 15px; // Un poco más de espacio
 
   ion-label {
     font-size: 0.9em;
     font-weight: 500;
-    color: #888;
+    color: #999999; // Color de la etiqueta (claro)
   }
+
   ion-input {
-    --padding-start: 0;
-    --padding-bottom: 8px;
-    --padding-top: 8px;
     font-size: 1.1em;
-    color: #333;
+    color: #525252; // Color del texto que escribes (blanco)
   }
+
   ion-icon {
-    color: #ccc;
+    color: #999999; // Color de los íconos (claro)
     font-size: 1.3em;
   }
 }
 
-.validation-message {
-  display: block; // Asegura que ocupe su propia línea
-  font-size: 0.8em;
-  margin-top: -5px; // Ajusta el espacio con el input de arriba
-  margin-left: 16px; // Mismo padding que el input
-  margin-bottom: 10px;
-  ion-icon {
-    font-size: 1em;
-    vertical-align: middle;
-    margin-right: 4px;
+/* --- Botones --- */
+ion-button {
+  --border-radius: 10px;
+  height: 50px;
+  font-weight: 600;
+  text-transform: none; // No se pone en mayúsculas
+
+  &.btn-google {
+    --background: #ffffff;
+    --color: #333;
+    --border-color: #e0e0e0;
+    --border-width: 1px;
+    --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    ion-icon {
+      font-size: 1.3em;
+      margin-right: 10px;
+    }
   }
 }
 
-
+/* --- Otros Elementos del Formulario --- */
 ion-checkbox {
   --checkbox-background-checked: var(--ion-color-primary);
   --border-radius: 4px;
@@ -122,22 +107,17 @@ ion-checkbox {
   text-decoration: none;
 }
 
-ion-button {
-  --border-radius: 10px;
-  height: 50px;
-  font-weight: 600;
-  text-transform: none; // No se pone en mayúsculas
-
-  &.btn-google {
-    --background: #ffffff;
-    --color: #333;
-    --border-color: #e0e0e0;
-    --border-width: 1px;
-    --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    ion-icon {
-      font-size: 1.3em;
-      margin-right: 10px;
-    }
+/* --- Clases de Ayuda y Separadores --- */
+.validation-message {
+  display: block; // Asegura que ocupe su propia línea
+  font-size: 0.8em;
+  margin-top: -5px; // Ajusta el espacio con el input de arriba
+  margin-left: 16px; // Mismo padding que el input
+  margin-bottom: 10px;
+  ion-icon {
+    font-size: 1em;
+    vertical-align: middle;
+    margin-right: 4px;
   }
 }
 
@@ -176,3 +156,22 @@ ion-button {
   }
 }
 
+ion-input {
+  
+  /* * Este es el "hack" para sobrescribir el fondo de autocompletar.
+   * Usamos una sombra interior (inset) gigante con nuestro color de fondo.
+   */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    
+    /* 1. Sombra interna con el color de tu caja (gris oscuro) */
+    box-shadow: 0 0 0 30px #333333 inset !important;
+    
+    /* * 2. Forzamos el color del TEXTO a blanco.
+     * (Si no haces esto, el texto será negro y no se verá)
+     */
+    -webkit-text-fill-color: #ffffff !important;
+  }
+}

@@ -137,3 +137,17 @@ ion-button[color="primary"] {
     margin-right: 4px;
   }
 }
+
+ion-input {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    
+    /* 1. Sombra interna con el color de tu caja (negro) */
+    box-shadow: 0 0 0 30px #000000 inset !important;
+    
+    /* 2. Forzamos el texto a blanco */
+    -webkit-text-fill-color: #ffffff !important;
+  }
+}

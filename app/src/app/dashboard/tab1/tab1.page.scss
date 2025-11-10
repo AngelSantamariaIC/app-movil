@@ -1,0 +1,129 @@
+/* --- Header --- */
+ion-toolbar {
+  --background: var(--ion-background-color, #fff);
+  --border-width: 0;
+}
+
+/* --- Tarjeta de Bienvenida --- */
+.welcome-card {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  ion-avatar {
+    width: 48px;
+    height: 48px;
+    margin-right: 12px;
+  }
+  .welcome-text ion-label {
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+}
+
+/* --- Tarjeta de Balance --- */
+.balance-card {
+  --background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  margin-inline: 16px;
+
+  ion-card-subtitle {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  ion-card-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #222;
+  }
+  .balance-summary {
+    display: flex;
+    gap: 16px;
+    font-weight: 600;
+    
+    .income { color: var(--ion-color-success); } // Verde
+    .expense { color: var(--ion-color-danger); } // Rojo
+  }
+}
+
+/* --- Botones de Acción --- */
+.action-buttons {
+  margin-top: 10px;
+  padding-inline: 12px;
+  
+  ion-button {
+    --border-radius: 12px;
+    height: 80px;
+    font-weight: 600;
+    text-transform: none;
+    font-size: 0.9rem;
+    --background: var(--ion-color-primary); // Botón cian
+    --color: var(--ion-color-primary-contrast); // Texto negro
+    display: flex;
+    flex-direction: column;
+
+    ion-icon {
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+
+    /* Clase para el botón oscuro "Registrar Gastos" */
+    &.btn-dark {
+      --background: #1e1e1e; // Botón oscuro
+      --color: #ffffff; // Texto blanco
+    }
+  }
+}
+
+/* --- Cabecera de la Lista "Flujo del Mes" --- */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+}
+
+/* --- Lista de Movimientos --- */
+.movement-list {
+  ion-item {
+    --background: #ffffff;
+    --border-radius: 12px;
+    --inner-border-width: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 10px;
+  }
+  
+  ion-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px; // Ícono con fondo redondeado
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &.gasto {
+      background: #fff0f0; // Fondo rojo claro
+      ion-icon { color: var(--ion-color-danger); }
+    }
+    
+    &.ingreso {
+      background: #e6f8ee; // Fondo verde claro
+      ion-icon { color: var(--ion-color-success); }
+    }
+    
+    ion-icon {
+      font-size: 1.5rem;
+    }
+  }
+
+  ion-note {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}

@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Inicio</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="welcome-card ion-padding-horizontal">
+    <ion-avatar>
+      <img src="https://i.pravatar.cc/150" />
+    </ion-avatar>
+    <div class="welcome-text">
+      <ion-label>Hola, {{ user?.usuarios_nombres_apellidos }}</ion-label>
+    </div>
+  </div>
+
+  <ion-card class="balance-card">
+    <ion-card-header>
+      <ion-card-subtitle>Balance General</ion-card-subtitle>
+      <ion-card-title>$ {{ balance?.general | number:'1.2-2' }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="balance-summary">
+        <span class="income">+{{ balance?.ingresos | number:'1.2-2' }}</span>
+        <span class="expense">-{{ balance?.gastos | number:'1.2-2' }}</span>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-grid class="action-buttons">
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" class="btn-dark" (click)="registrarGasto()">
+          <ion-icon slot="start" name="arrow-down-outline"></ion-icon>
+          Registrar Gastos
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" color="primary">
+          <ion-icon slot="start" name="analytics-outline"></ion-icon>
+          Ver Mi Plan
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="list-header ion-padding-horizontal">
+    <h3>Flujo del Mes</h3>
+    <ion-button fill="clear" size="small">Ver todo</ion-button>
+  </div>
+
+  <ion-list [inset]="true" class="movement-list">
+    <ion-item *ngFor="let mov of movimientos">
+      <ion-avatar slot="start" [ngClass]="{'gasto': mov.categoria.tipo.tipos_descripcion === 'Gastos', 'ingreso': mov.categoria.tipo.tipos_descripcion !== 'Gastos'}">
+        <ion-icon 
+          [name]="mov.categoria.tipo.tipos_descripcion === 'Gastos' ? 'arrow-down-outline' : 'arrow-up-outline'">
+        </ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ mov.categoria.categorias_descripcion }}</h2>
+        <p>{{ mov.movimientos_fecha | date:'dd MMM yyyy' }}</p>
+      </ion-label>
+      <ion-note 
+        slot="end" 
+        [color]="mov.categoria.tipo.tipos_descripcion === 'Gastos' ? 'danger' : 'success'">
+        $ {{ mov.movimientos_valor | number:'1.2-2' }}
+      </ion-note>
+    </ion-item>
+    
+    <ion-item *ngIf="movimientos.length === 0 && !loading">
+      <ion-label class="ion-text-center ion-text-wrap">
+        No hay movimientos este mes. ¡Empieza registrando uno!
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  
+</ion-content>

@@ -1,21 +1,33 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { IonicModule, Platform } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 
-import { AppComponent } from './app.component';
+// --- 1. IMPORTA EL STATUS BAR Y EL STYLE ---
+import { StatusBar, Style } from '@capacitor/status-bar';
 
-describe('AppComponent', () => {
+@Component({
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
+  standalone: true,
+  imports: [IonicModule, CommonModule],
+})
+export class AppComponent {
+  constructor(private platform: Platform) {
+    this.initializeApp();
+  }
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
-  });
-
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-});
+  initializeApp() {
+    this.platform.ready().then(() => {
+      
+      // --- 2. VERIFICA SI ES MÓVIL (NO WEB) ---
+      if (this.platform.is('capacitor')) {
+        
+        // --- 3. AÑADE ESTA LÍNEA ---
+        // Style.Dark pone el texto y los íconos en NEGRO
+        StatusBar.setStyle({ style: Style.Dark }); 
+      }
+      
+    });
+  }
+}
