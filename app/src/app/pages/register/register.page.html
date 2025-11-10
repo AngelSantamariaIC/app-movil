@@ -1,0 +1,151 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login" color="dark"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="header-section">
+    <h1 class="ion-no-margin">FINANZ<span>APP</span></h1>
+    <h2 class="ion-margin-top">Crea tu cuenta</h2>
+    <p class="subtitle">Empieza a tomar el control de tus finanzas hoy mismo.</p>
+  </div>
+
+  <form (ngSubmit)="doRegister()" #registerForm="ngForm">
+    
+    <ion-item fill="outline" class="ion-margin-top">
+      <ion-label position="floating">Nombre y Apellido</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="name"
+        name="name"
+        autocomplete="name"
+        required
+        #nameInput="ngModel"
+      ></ion-input>
+      <ion-icon slot="end" name="person-outline"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="nameInput.invalid && nameInput.dirty" class="validation-message">
+      <ion-icon name="alert-circle-outline"></ion-icon> Ingresa tu nombre y apellido.
+    </ion-text>
+
+
+    <ion-item fill="outline" class="ion-margin-top">
+      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-input
+        type="email"
+        inputmode="email"
+        [(ngModel)]="email"
+        name="email"
+        autocomplete="email"
+        required
+        #emailInput="ngModel"
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+      ></ion-input>
+      <ion-icon slot="end" name="mail-outline"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="emailInput.invalid && emailInput.dirty" class="validation-message">
+      <ion-icon name="alert-circle-outline"></ion-icon> Por favor escribe un correo válido
+    </ion-text>
+
+    <ion-item fill="outline" class="ion-margin-top">
+      <ion-label position="floating">Celular</ion-label>
+      <ion-input type="tel" [(ngModel)]="celular" name="celular" required></ion-input>
+      <ion-icon slot="end" name="call-outline"></ion-icon>
+    </ion-item>
+
+    <ion-item fill="outline" class="ion-margin-top">
+      <ion-label position="floating">Dirección</ion-label>
+      <ion-input type="text" [(ngModel)]="direccion" name="direccion"></ion-input>
+      <ion-icon slot="end" name="home-outline"></ion-icon>
+    </ion-item>
+    
+    <ion-item fill="outline" class="ion-margin-top">
+      <ion-label position="floating">Ciudad</ion-label>
+      <ion-input type="text" [(ngModel)]="ciudad" name="ciudad"></ion-input>
+      <ion-icon slot="end" name="location-outline"></ion-icon>
+    </ion-item>
+    
+    <ion-item fill="outline" class="ion-margin-top">
+      <ion-label position="floating">Tipo de Identificación</ion-label>
+      <ion-select [(ngModel)]="tipoIdentificacionId" name="tipoIdentificacionId" required>
+        <ion-select-option 
+          *ngFor="let tipo of tiposDeIdentificacion" 
+          [value]="tipo.tipos_identificacion_id">
+          {{ tipo.tipos_identificacion_descripcion }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item fill="outline" class="ion-margin-top">
+      <ion-label position="floating">Número de Identificación</ion-label>
+      <ion-input type="text" [(ngModel)]="identificacion" name="identificacion"></ion-input>
+      <ion-icon slot="end" name="id-card-outline"></ion-icon>
+    </ion-item>
+
+    <ion-item fill="outline" class="ion-margin-top">
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input
+        [type]="showPwd ? 'text' : 'password'"
+        [(ngModel)]="password"
+        name="password"
+        autocomplete="new-password"
+        required
+        #passwordInput="ngModel"
+        minlength="8"
+        pattern="^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$"
+      ></ion-input>
+      <ion-icon slot="end" [name]="showPwd ? 'eye-off-outline' : 'eye-outline'" (click)="showPwd = !showPwd"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="passwordInput.invalid && passwordInput.dirty" class="validation-message">
+      <ion-icon name="alert-circle-outline"></ion-icon> Su contraseña debe tener números y letras (mínimo 8 caracteres).
+    </ion-text>
+
+    <ion-item fill="outline" class="ion-margin-top">
+      <ion-label position="floating">Confirmar Contraseña</ion-label>
+      <ion-input
+        [type]="showConfirmPwd ? 'text' : 'password'"
+        [(ngModel)]="confirmPassword"
+        name="confirmPassword"
+        autocomplete="new-password"
+        required
+        #confirmPasswordInput="ngModel"
+      ></ion-input>
+      <ion-icon slot="end" [name]="showConfirmPwd ? 'eye-off-outline' : 'eye-outline'" (click)="showConfirmPwd = !showConfirmPwd"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="confirmPasswordInput.invalid && confirmPasswordInput.dirty" class="validation-message">
+      <ion-icon name="alert-circle-outline"></ion-icon> Confirma tu contraseña.
+    </ion-text>
+    <ion-text color="danger" *ngIf="password !== confirmPassword && confirmPasswordInput.dirty && confirmPasswordInput.valid" class="validation-message">
+      <ion-icon name="alert-circle-outline"></ion-icon> Las contraseñas no coinciden.
+    </ion-text>
+
+    <ion-button
+      class="ion-margin-top"
+      expand="block"
+      color="primary"
+      type="submit"
+      [disabled]="loading || registerForm.invalid || (password !== confirmPassword)">
+      <ion-spinner *ngIf="loading" name="lines-small" class="ion-margin-end"></ion-spinner>
+      {{ loading ? 'Registrando…' : 'Crear Cuenta' }}
+    </ion-button>
+
+  </form>
+
+  <div class="separator ion-margin-vertical">
+    <span>O</span>
+  </div>
+
+  <ion-button expand="block" fill="outline" class="btn-google">
+    <ion-icon slot="start" src="/assets/icons/google.svg"></ion-icon>
+    Registrarse con Google
+  </ion-button>
+
+  <div class="footer-link ion-text-center ion-margin-top">
+    Ya tienes cuenta? <a routerLink="/login" class="login-link">Iniciar sesión</a>
+  </div>
+
+</ion-content>

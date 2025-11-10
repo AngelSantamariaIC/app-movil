@@ -1,75 +1,178 @@
-/* Fondo y centro vertical/horizontal */
-.login-wrapper {
-  --background: var(--ion-background-color);
-  display: grid;
-  place-items: start center;
-  padding-top: 6vh;   /* separa del header en desktop */
+/* En login.page.scss */
+
+ion-header {
+  ion-toolbar {
+    --background: transparent; // Fondo transparente en el header
+    --border-width: 0;
+  }
 }
 
-/* Card compacta y centrada */
-.login-card {
-  width: min(420px, 92vw);     /* 👈 controla el ancho máximo */
-  background: var(--ion-card-background);
-  border-radius: 14px;
-  box-shadow: 0 8px 22px rgba(0,0,0,.12);
+/* En login.page.scss */
+
+ion-item {
+  --background: #ffffff; // <-- Fondo blanco
+  --border-radius: 10px;
+  --border-color: #e0e0e0; // Un borde gris muy sutil
+  --highlight-color-focused: var(--ion-color-primary); // Borde de tu color primario al enfocar
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); // Sombra sutil
+  margin-bottom: 10px;
+  
+  ion-label {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #888; // Color de la etiqueta
+  }
+  ion-input {
+    font-size: 1.1em;
+    color: #333; // Color del texto que escribes
+  }
+  ion-icon {
+    color: #ccc; // Color de los íconos
+    font-size: 1.3em;
+  }
 }
 
-/* Header de la card */
-ion-card-header {
-  text-align: center;
-  padding-bottom: 6px;
-}
-ion-card-title {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  font-size: 1.05rem;          /* 👈 más compacto */
-  font-weight: 700;
-  color: var(--ion-text-color);
-}
-ion-card-subtitle {
-  color: var(--ion-color-medium);
-  font-size: .9rem;
+ion-content {
+  --background: #f8f8f8; // Un color de fondo muy suave
+  font-family: 'Poppins', sans-serif; // Asumiendo que usas Poppins
 }
 
-/* Items compactos */
-ion-item.soft {
-  --background: var(--ion-item-background, var(--ion-card-background));
-  border-radius: 10px;
-  box-shadow: 0 1px 6px rgba(0,0,0,.06);
-  margin: 8px 0;
-}
-ion-item.dense {
-  --min-height: 44px;          /* 👈 reduce altura */
-  --padding-start: 10px;
-  --inner-padding-end: 6px;
-}
-ion-input {
-  --color: var(--ion-text-color);
-  --highlight-color-focused: var(--ion-color-primary);
+.header-section {
+  text-align: left;
+  margin-top: 10px;
+  margin-bottom: 30px;
+
+  h1 {
+    font-size: 2.5rem; // Tamaño grande para FINANZAPP
+    font-weight: 800;
+    color: #1e2023;
+    span {
+      color: var(--ion-color-primary);
+    }
+  }
+
+  h2 {
+    font-size: 2rem; // Tamaño para "Hola de nuevo"
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+  }
+
+  p.subtitle {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+  }
 }
 
-/* Fila toggle + link */
-.row-between {
+ion-item {
+  --background: #ffffff;
+  --border-radius: 10px;
+  --highlight-color-focused: var(--ion-color-primary); // Borde azul al enfocar
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); // Sombra sutil
+  margin-bottom: 10px; // Espacio entre items
+
+  ion-label {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #888;
+  }
+  ion-input {
+    --padding-start: 0;
+    --padding-bottom: 8px;
+    --padding-top: 8px;
+    font-size: 1.1em;
+    color: #333;
+  }
+  ion-icon {
+    color: #ccc;
+    font-size: 1.3em;
+  }
+}
+
+.validation-message {
+  display: block; // Asegura que ocupe su propia línea
+  font-size: 0.8em;
+  margin-top: -5px; // Ajusta el espacio con el input de arriba
+  margin-left: 16px; // Mismo padding que el input
+  margin-bottom: 10px;
+  ion-icon {
+    font-size: 1em;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+}
+
+
+ion-checkbox {
+  --checkbox-background-checked: var(--ion-color-primary);
+  --border-radius: 4px;
+}
+
+.remember-label {
+  font-size: 0.9em;
+  color: #555;
+  margin-left: 8px;
+}
+
+.forgot-link {
+  font-size: 0.9em;
+  color: var(--ion-color-primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+ion-button {
+  --border-radius: 10px;
+  height: 50px;
+  font-weight: 600;
+  text-transform: none; // No se pone en mayúsculas
+
+  &.btn-google {
+    --background: #ffffff;
+    --color: #333;
+    --border-color: #e0e0e0;
+    --border-width: 1px;
+    --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    ion-icon {
+      font-size: 1.3em;
+      margin-right: 10px;
+    }
+  }
+}
+
+.separator {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin: 8px 2px 6px;
-}
-.light-link {
-  color: var(--ion-color-primary);
-  text-decoration: none;
-  font-size: .9rem;
+  text-align: center;
+  color: #ccc;
+  font-size: 0.9em;
+  margin-top: 30px; // Espacio vertical
+  margin-bottom: 20px;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #eee;
+  }
+
+  &:not(:empty)::before {
+    margin-right: .25em;
+  }
+
+  &:not(:empty)::after {
+    margin-left: .25em;
+  }
 }
 
-/* Botón compacto y uniforme */
-.submit-btn {
-  --border-radius: 10px;
-  margin-top: 10px;
+.footer-link {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 25px; // Espacio con el botón de Google
+  .register-link {
+    color: var(--ion-color-primary);
+    font-weight: 500;
+    text-decoration: none;
+  }
 }
 
-/* Responsive pequeños */
-@media (max-width: 360px) {
-  .login-wrapper { padding-top: 3vh; }
-  ion-card-title { font-size: 1rem; }
-}

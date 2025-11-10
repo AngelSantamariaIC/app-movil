@@ -1,62 +1,93 @@
-<ion-header>
+<ion-header mode="ios">
   <ion-toolbar>
-    <ion-title>Iniciar sesión</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" color="dark"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="login-wrapper">
+<ion-content class="ion-padding">
 
-  <ion-card class="login-card">
-    <ion-card-header>
-      <ion-card-title>
-        <ion-icon name="lock-closed-outline"></ion-icon>
-        Acceso administrador
-      </ion-card-title>
-      <ion-card-subtitle>Ingresa tus credenciales para continuar</ion-card-subtitle>
-    </ion-card-header>
+  <div class="header-section">
+    <h1 class="ion-no-margin">FINANZ<span>APP</span></h1>
+    <h2 class="ion-margin-top">Hola de nuevo</h2>
+    <p class="subtitle">Es hora de seguir mejorando tu futuro financiero.</p>
+  </div>
 
-    <ion-card-content>
-      <!-- Usuario -->
-      <ion-item class="soft dense">
-        <ion-input
-          label="Usuario"
-          labelPlacement="stacked"
-          [(ngModel)]="username"
-          autocomplete="username"
-          required>
-          <ion-icon slot="start" name="person-outline"></ion-icon>
-        </ion-input>
-      </ion-item>
+  <form (ngSubmit)="doLogin()" #loginForm="ngForm">
+    
+    <ion-item fill="outline" class="ion-margin-top">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input
+        type="email"
+        inputmode="email"
+        [(ngModel)]="username"
+        name="username"
+        autocomplete="email"
+        required
+        #emailInput="ngModel"
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+      ></ion-input>
+      <ion-icon slot="end" name="mail-outline"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="emailInput.invalid && emailInput.dirty" class="validation-message">
+      <ion-icon name="alert-circle-outline"></ion-icon> Por favor escribe un correo válido
+    </ion-text>
 
-      <!-- Contraseña + toggle -->
-      <ion-item class="soft dense">
-        <ion-input
-          label="Contraseña"
-          labelPlacement="stacked"
-          [type]="showPwd ? 'text' : 'password'"
-          [(ngModel)]="password"
-          autocomplete="current-password"
-          required>
-          <ion-icon slot="start" name="key-outline"></ion-icon>
-          <ion-button slot="end" fill="clear" size="small" (click)="showPwd = !showPwd">
-            <ion-icon [name]="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
-          </ion-button>
-        </ion-input>
-      </ion-item>
+    <ion-item fill="outline" class="ion-margin-top">
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input
+        [type]="showPwd ? 'text' : 'password'"
+        [(ngModel)]="password"
+        name="password"
+        autocomplete="current-password"
+        required
+        #passwordInput="ngModel"
+        minlength="8"
+        pattern="^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$"
+      ></ion-input>
+      <ion-icon slot="end" [name]="showPwd ? 'eye-off-outline' : 'eye-outline'" (click)="showPwd = !showPwd"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="passwordInput.invalid && passwordInput.dirty" class="validation-message">
+      <ion-icon name="alert-circle-outline"></ion-icon> Su contraseña debe tener números
+    </ion-text>
 
-      <!-- Recordarme -->
-      <div class="row-between">
-        <ion-toggle justify="start" [(ngModel)]="remember" size="small">Recordarme</ion-toggle>
-        <a class="light-link" routerLink="/">Volver al inicio</a>
-      </div>
+    <ion-grid class="ion-no-padding ion-margin-top">
+      <ion-row class="ion-align-items-center">
+        <ion-col size="6">
+          <ion-item lines="none" class="ion-no-padding">
+            <ion-checkbox slot="start" [(ngModel)]="remember" color="primary"></ion-checkbox>
+            <ion-label class="remember-label">Recordar por 30 días</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6" class="ion-text-end">
+          <a class="forgot-link">Recordar Contraseña</a>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-      <!-- Botón -->
-      <ion-button expand="block" size="default" class="submit-btn"
-                  (click)="doLogin()" [disabled]="loading || !username || !password">
-        <ion-spinner *ngIf="loading" name="lines-small" class="ion-margin-end"></ion-spinner>
-        {{ loading ? 'Ingresando…' : 'Entrar' }}
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+    <ion-button
+      class="ion-margin-top"
+      expand="block"
+      color="primary"
+      type="submit"
+      [disabled]="loading || loginForm.invalid">
+      <ion-spinner *ngIf="loading" name="lines-small" class="ion-margin-end"></ion-spinner>
+      {{ loading ? 'Iniciando sesión…' : 'Iniciar Sesión' }}
+    </ion-button>
+
+  </form>
+
+  <div class="separator ion-margin-vertical">
+    <span>O</span>
+  </div>
+
+  <ion-button expand="block" fill="outline" class="btn-google">
+    <ion-icon slot="start" src="/assets/icons/google.svg"></ion-icon> Iniciar con Google
+  </ion-button>
+
+  <div class="footer-link ion-text-center ion-margin-top">
+    No tienes cuenta? <a routerLink="/register" class="register-link">Empezar ahora</a>
+  </div>
 
 </ion-content>

@@ -1,0 +1,139 @@
+/* --- Header Transparente --- */
+ion-header {
+  ion-toolbar {
+    --background: transparent; // Fondo de la barra de navegación
+    --border-width: 0; // Sin línea
+  }
+}
+
+/* --- Fondo de la Página --- */
+/* (El fondo blanco ya lo pusimos en variables.scss) */
+
+/* --- Títulos (FINANZAPP, Crea tu cuenta) --- */
+.header-section {
+  text-align: left;
+  margin-top: 10px;
+  margin-bottom: 30px;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1e2023;
+    span {
+      color: var(--ion-color-primary); // Tu color cian
+    }
+  }
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  p.subtitle {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+  }
+}
+
+/* --- ESTA ES LA PARTE IMPORTANTE (Cajas Negras) --- */
+ion-item {
+  --background: #ffffff; // Fondo negro
+  --border-radius: 10px; // Bordes redondeados
+  --border-color: #979797; // Borde negro (invisible)
+  --border-width: 1px;
+  
+  /* Borde de color al hacer clic (tu color cian) */
+  --highlight-color-focused: var(--ion-color-primary); 
+  
+  margin-bottom: 20px; // Espacio entre las cajas
+  
+  /* --- Texto y Iconos dentro de la caja --- */
+  
+  /* "Nombre y Apellido" (cuando está flotando) */
+  ion-label {
+    color: #999999; 
+    font-weight: 500;
+  }
+
+  /* El texto que tú escribes */
+  ion-input {
+    color: #525252; // Texto blanco
+  }
+
+  /* Los iconos (persona, mail, ojo) */
+  ion-icon {
+    color: #999999; // Iconos grises
+    font-size: 1.3em;
+  }
+}
+
+/* --- Botón "Crear Cuenta" --- */
+ion-button[color="primary"] {
+  --border-radius: 10px;
+  height: 50px;
+  font-weight: 600;
+  text-transform: none; // Sin mayúsculas
+}
+
+/* --- Separador "O" --- */
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ccc;
+  font-size: 0.9em;
+  margin-top: 30px;
+  margin-bottom: 20px;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #eee;
+  }
+  &::before { margin-right: .25em; }
+  &::after { margin-left: .25em; }
+}
+
+/* --- Botón de Google (Cian con contorno) --- */
+.btn-google {
+  --background: transparent; // Fondo transparente
+  --color: var(--ion-color-primary); // Texto de tu color cian
+  --border-color: var(--ion-color-primary); // Borde de tu color cian
+  --border-width: 1px;
+  --border-radius: 10px;
+  height: 50px;
+  font-weight: 600;
+  text-transform: none; // Sin mayúsculas
+
+  ion-icon {
+    font-size: 1.3em;
+    margin-right: 10px;
+  }
+}
+
+/* --- Link "Iniciar sesión" al final --- */
+.footer-link {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 25px;
+  .login-link {
+    color: var(--ion-color-primary); // Tu color cian
+    font-weight: 500;
+    text-decoration: none;
+  }
+}
+
+/* --- Mensajes de Validación (debajo de las cajas) --- */
+.validation-message {
+  display: block;
+  font-size: 0.8em;
+  margin-top: -15px; // Pone el mensaje más cerca de la caja
+  margin-left: 16px;
+  margin-bottom: 10px;
+  ion-icon {
+    font-size: 1em;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+}

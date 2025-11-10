@@ -12,13 +12,10 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  loading = true;
-  empleados: any[] = [];
-  constructor(private http: HttpClient) {}
+  
+  constructor() {}
   ngOnInit() {
-    this.http.get<any[]>('http://localhost:8080/employees?limit=20&offset=0')
-      .subscribe({ next: d => { this.empleados = d ?? []; this.loading = false; },
-                   error: _ => { this.empleados = []; this.loading = false; }});
+    
   }
 }
 
