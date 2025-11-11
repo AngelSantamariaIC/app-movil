@@ -23,17 +23,13 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card>
+<ion-card>
     <ion-card-header>
       <ion-card-title>Gastos por Categoría</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <div class="chart-placeholder">
-        
-
-[Image of a pie chart showing expense breakdown by category]
-
-        <p>(Aquí va un gráfico de dona)</p>
+      <div class="chart-wrapper">
+        <canvas #donutCanvas width="320" height="320"></canvas>
       </div>
     </ion-card-content>
   </ion-card>

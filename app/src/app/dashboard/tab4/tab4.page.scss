@@ -75,3 +75,28 @@
     }
   }
 }
+
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;
+  min-height: 280px;
+}
+
+ion-card {
+  --background: #ffffff;
+  color: #111;
+}
+
+.budget-list ion-item {
+  --background: #ffffff;
+  --border-radius: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.budget-bar ion-progress-bar {
+  width: 80px;
+}

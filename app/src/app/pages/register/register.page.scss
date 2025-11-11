@@ -11,9 +11,16 @@
 
 /* ---------- Header transparente ---------- */
 ion-header {
-  ion-toolbar {
-    --background: transparent;
+   ion-toolbar {
+    --background: #ffffff; /* Fondo transparente en el header */
+    --color: #111;           /* color de texto del toolbar */
     --border-width: 0;
+  }
+  ion-back-button {
+    /* color del icono y texto del back */
+    --color: #111;           /* más oscuro que 'dark' por defecto */
+    --icon-font-size: 22px;  /* opcional, un pelín más grande */
+    --padding-start: 2px;    /* opcional, ajusta separación */
   }
 }
 
