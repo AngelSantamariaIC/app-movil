@@ -12,3 +12,4 @@ docker ps -> saber que imagen esta
 docker exec -it [imagen] bash
 
 # crear pagina en ionic
+

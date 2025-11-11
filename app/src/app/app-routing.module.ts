@@ -39,8 +39,12 @@ const routes: Routes = [
   },
   {
   path: 'dashboard',
-  loadChildren: () => import('./dashboard/dashboard.routes').then( m => m.routes) // <-- CORRECTO
+  loadChildren: () => import('./dashboard/dashboard.routes').then( m => m.routes)
 },
+  {
+    path: 'gasto-modal',
+    loadChildren: () => import('./gasto-modal/gasto-modal.module').then( m => m.GastoModalPageModule)
+  },
 ];
 
 @NgModule({

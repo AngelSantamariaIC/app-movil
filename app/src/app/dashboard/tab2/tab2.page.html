@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Movimientos</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar 
+      placeholder="Buscar por categoría o valor" 
+      (ionInput)="handleSearch($event)">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+
+  <ion-list [inset]="true" class="movement-list">
+    
+    <ion-item *ngFor="let mov of filteredMovimientos">
+      <ion-avatar slot="start" [ngClass]="{'gasto': mov.categoria.tipo.tipos_descripcion === 'Gastos', 'ingreso': mov.categoria.tipo.tipos_descripcion !== 'Gastos'}">
+        <ion-icon 
+          [name]="mov.categoria.tipo.tipos_descripcion === 'Gastos' ? 'arrow-down-outline' : 'arrow-up-outline'">
+        </ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ mov.categoria.categorias_descripcion }}</h2>
+        <p>{{ mov.movimientos_fecha | date:'dd MMM yyyy, h:mm a' }}</p>
+      </ion-label>
+      <ion-note 
+        slot="end" 
+        [color]="mov.categoria.tipo.tipos_descripcion === 'Gastos' ? 'danger' : 'success'">
+        $ {{ mov.movimientos_valor | number:'1.2-2' }}
+      </ion-note>
+    </ion-item>
+    
+    <ion-item *ngIf="allMovimientos.length === 0 && !loading">
+      <ion-label class="ion-text-center ion-text-wrap">
+        Aún no tienes movimientos registrados.
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -5,6 +5,7 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs'; // Para hacer varias llamadas a la vez
 import { RouterLink } from '@angular/router'; // Importa RouterLink
+import { GastoModalPage } from 'src/app/gasto-modal/gasto-modal.page';
 
 // Asegúrate de que esta sea la URL de tu API
 const API_BASE = 'http://localhost:8080';
@@ -65,18 +66,21 @@ export class Tab1Page implements OnInit {
 
   // Función para el botón "Registrar Gastos"
   async registrarGasto() {
-    // Aquí deberás crear un Modal para registrar el gasto
-    // Por ahora, solo es un ejemplo:
-    console.log('Abrir modal de registrar gasto...');
+    // Crea el modal
+    const modal = await this.modalCtrl.create({
+      component: GastoModalPage, // El componente modal que creamos
+    });
     
-    // const modal = await this.modalCtrl.create({
-    //   component: TuModalDeGastoPage,
-    // });
-    // await modal.present();
+    // Presenta el modal
+    await modal.present();
     
-    // const { data } = await modal.onDidDismiss();
-    // if (data && data.refresh) {
-    //   this.loadData(); // Refresca los datos si el modal lo indica
-    // }
+    // Espera a que el modal se cierre
+    const { data, role } = await modal.onDidDismiss();
+
+    // Si el modal se cerró con "confirm" (Guardar)
+    // y devolvió { refresh: true }
+    if (role === 'confirm' && data?.refresh) {
+      this.loadData(); // <-- Vuelve a cargar los datos del dashboard
+    }
   }
 }
