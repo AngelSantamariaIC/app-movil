@@ -1,129 +1,217 @@
-/* --- Header --- */
+/* =========================================================
+   FINANZAPP · Home
+   Estilos organizados y consistentes (Ionic + SCSS)
+   ========================================================= */
+
+/* ---------- Header ---------- */
 ion-toolbar {
   --background: var(--ion-background-color, #fff);
   --border-width: 0;
 }
 
-/* --- Tarjeta de Bienvenida --- */
+/* ---------- Tarjeta de Bienvenida ---------- */
 .welcome-card {
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px 16px;
 
   ion-avatar {
     width: 48px;
     height: 48px;
     margin-right: 12px;
   }
-  .welcome-text ion-label {
-    font-size: 1.4rem;
-    font-weight: 600;
+
+  .welcome-text {
+    ion-label {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #1e2023;
+    }
   }
 }
 
-/* --- Tarjeta de Balance --- */
+/* ---------- Tarjeta de Balance ---------- */
 .balance-card {
   --background: #ffffff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   border-radius: 16px;
-  margin-inline: 16px;
+  margin: 10px 16px 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 
   ion-card-subtitle {
     font-size: 0.9rem;
     color: #666;
   }
+
   ion-card-title {
     font-size: 2.5rem;
     font-weight: 800;
     color: #222;
   }
+
   .balance-summary {
     display: flex;
     gap: 16px;
     font-weight: 600;
-    
-    .income { color: var(--ion-color-success); } // Verde
-    .expense { color: var(--ion-color-danger); } // Rojo
+
+    .income { color: var(--ion-color-success); }  /* Verde */
+    .expense { color: var(--ion-color-danger); }  /* Rojo */
   }
 }
 
-/* --- Botones de Acción --- */
+/* ---------- Botones de Acción ---------- */
 .action-buttons {
   margin-top: 10px;
   padding-inline: 12px;
-  
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
   ion-button {
     --border-radius: 12px;
+    --background: var(--ion-color-primary);            /* Primario */
+    --color: var(--ion-color-primary-contrast);        /* Contraste */
     height: 80px;
     font-weight: 600;
     text-transform: none;
     font-size: 0.9rem;
-    --background: var(--ion-color-primary); // Botón cian
-    --color: var(--ion-color-primary-contrast); // Texto negro
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    transition: transform 120ms ease, box-shadow 120ms ease;
 
     ion-icon {
       font-size: 1.5rem;
       margin-bottom: 4px;
     }
 
-    /* Clase para el botón oscuro "Registrar Gastos" */
+    &:active {
+      transform: translateY(1px);
+    }
+
+    /* Botón oscuro “Registrar Gastos” */
     &.btn-dark {
-      --background: #1e1e1e; // Botón oscuro
-      --color: #ffffff; // Texto blanco
+      --background: #1e1e1e;
+      --color: #ffffff;
     }
   }
 }
 
-/* --- Cabecera de la Lista "Flujo del Mes" --- */
+/* ---------- Cabecera de la Lista “Flujo del Mes” ---------- */
 .list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  margin: 20px 16px 10px;
+
   h3 {
     font-size: 1.2rem;
     font-weight: 700;
+    color: #1e2023;
+    margin: 0;
   }
 }
 
-/* --- Lista de Movimientos --- */
+/* ---------- Lista de Movimientos ---------- */
 .movement-list {
+  padding: 0 16px 16px;
+
   ion-item {
     --background: #ffffff;
-    --border-radius: 12px;
     --inner-border-width: 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --border-radius: 12px;
     margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
-  
+
   ion-avatar {
     width: 44px;
     height: 44px;
-    border-radius: 12px; // Ícono con fondo redondeado
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    &.gasto {
-      background: #fff0f0; // Fondo rojo claro
-      ion-icon { color: var(--ion-color-danger); }
-    }
-    
-    &.ingreso {
-      background: #e6f8ee; // Fondo verde claro
-      ion-icon { color: var(--ion-color-success); }
-    }
-    
+
     ion-icon {
       font-size: 1.5rem;
+    }
+
+    &.gasto {
+      background: #fff0f0;                     /* Fondo rojo claro */
+      ion-icon { color: var(--ion-color-danger); }
+    }
+
+    &.ingreso {
+      background: #e6f8ee;                     /* Fondo verde claro */
+      ion-icon { color: var(--ion-color-success); }
     }
   }
 
   ion-note {
     font-weight: 600;
     font-size: 1.1rem;
+    color: #222;
+  }
+}
+
+/* ---------- Responsivo pequeño ---------- */
+@media (max-width: 360px) {
+  .action-buttons {
+    grid-template-columns: 1fr; /* Botones en una columna en pantallas muy pequeñas */
+  }
+}
+/* Balance refinado */
+.balance-card {
+  ion-card-subtitle {
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+  ion-card-title {
+    line-height: 1.1;
+    &.negative { opacity: .95; } /* mantiene sobrio el título aún negativo */
+  }
+  ion-card-content { padding-top: 8px; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 6px;
+  }
+
+  .kpi {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 10px 12px;
+
+    .kpi-label {
+      font-size: .74rem;
+      letter-spacing: .02em;
+      color: #6b7280;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    .kpi-value {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #111;
+      &.income { color: var(--ion-color-success); }
+      &.expense { color: var(--ion-color-danger); }
+      &.positive { color: var(--ion-color-success); }
+      &.negative { color: var(--ion-color-danger); }
+    }
+    &.total {
+      background: #eef6ff;
+      .kpi-label { color: #3b82f6; }
+    }
+  }
+}
+
+/* Lista: colores consistentes */
+.movement-list {
+  ion-note {
+    font-weight: 700;
+    &.positive { color: var(--ion-color-success); }
+    &.negative { color: var(--ion-color-danger); }
   }
 }

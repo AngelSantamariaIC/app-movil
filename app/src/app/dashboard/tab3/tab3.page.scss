@@ -1,0 +1,44 @@
+.chat-container {
+  --background: #f7f7f7;
+
+  .chat-list {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .message-bubble {
+    max-width: 80%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    width: fit-content;
+  }
+
+  .user {
+    align-self: flex-end;
+    background: var(--ion-color-primary);
+    color: white;
+    border-bottom-right-radius: 2px;
+  }
+
+  .ai {
+    align-self: flex-start;
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-bottom-left-radius: 2px;
+    color: #2b2b2b;
+  }
+}
+
+.input-toolbar {
+  display: flex;
+  ion-input {
+    --background: white;
+    padding-left: 12px;
+    border-radius: 10px;
+    margin-right: 8px;
+  }
+}

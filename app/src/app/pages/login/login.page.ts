@@ -71,12 +71,12 @@ export class LoginPage {
 
         // limpia el otro storage para evitar confusiones
         (this.remember ? sessionStorage : localStorage).removeItem('token');
-
+        this.router.navigateByUrl('/dashboard/tab1', { replaceUrl: true });
         (await this.toast.create({
           message: 'Bienvenido 👋',
           duration: 900,
         })).present();
-        this.router.navigateByUrl('/dashboard/tab1', { replaceUrl: true });
+        
 
         // this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
       },

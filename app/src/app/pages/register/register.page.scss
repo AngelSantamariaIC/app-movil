@@ -1,34 +1,45 @@
-/* --- Header Transparente --- */
+/* register.page.scss
+   =========================================================
+   FINANZAPP - Registro (Ionic) · Cajas blancas, estilo limpio
+   ========================================================= */
+
+/* ---------- Contenedor ---------- */
+:host {
+  display: block;
+  background: #ffffff;
+}
+
+/* ---------- Header transparente ---------- */
 ion-header {
   ion-toolbar {
-    --background: transparent; // Fondo de la barra de navegación
-    --border-width: 0; // Sin línea
+    --background: transparent;
+    --border-width: 0;
   }
 }
 
-/* --- Fondo de la Página --- */
-/* (El fondo blanco ya lo pusimos en variables.scss) */
-
-/* --- Títulos (FINANZAPP, Crea tu cuenta) --- */
+/* ---------- Sección de títulos ---------- */
 .header-section {
   text-align: left;
   margin-top: 10px;
   margin-bottom: 30px;
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 2.5rem; /* FINANZAPP */
     font-weight: 800;
     color: #1e2023;
+
     span {
-      color: var(--ion-color-primary); // Tu color cian
+      color: var(--ion-color-primary);
     }
   }
+
   h2 {
-    font-size: 2rem;
+    font-size: 2rem;   /* Crea tu cuenta */
     font-weight: 700;
     color: #333;
     margin-bottom: 8px;
   }
+
   p.subtitle {
     font-size: 1rem;
     color: #666;
@@ -36,75 +47,159 @@ ion-header {
   }
 }
 
-/* --- ESTA ES LA PARTE IMPORTANTE (Cajas Negras) --- */
+/* =========================================================
+   Inputs: Cajas BLANCAS, borde sutil, sin sombra
+   ========================================================= */
 ion-item {
-  --background: #ffffff; // Fondo negro
-  --border-radius: 10px; // Bordes redondeados
-  --border-color: #979797; // Borde negro (invisible)
+  --background: #ffffff;
+  --border-radius: 10px;
+  --border-color: #d3d3d3;
   --border-width: 1px;
-  
-  /* Borde de color al hacer clic (tu color cian) */
-  --highlight-color-focused: var(--ion-color-primary); 
-  
-  margin-bottom: 20px; // Espacio entre las cajas
-  
-  /* --- Texto y Iconos dentro de la caja --- */
-  
-  /* "Nombre y Apellido" (cuando está flotando) */
+  --highlight-color-focused: var(--ion-color-primary);
+  box-shadow: none;
+  margin-bottom: 16px;
+
   ion-label {
-    color: #999999; 
+    font-size: 0.95em;
     font-weight: 500;
+    color: #555;
   }
 
-  /* El texto que tú escribes */
-  ion-input {
-    color: #525252; // Texto blanco
+  ion-input,
+  ion-select,
+  ion-textarea {
+    font-size: 1.05em;
+    color: #222;
   }
 
-  /* Los iconos (persona, mail, ojo) */
   ion-icon {
-    color: #999999; // Iconos grises
-    font-size: 1.3em;
+    color: #888;
+    font-size: 1.2em;
   }
 }
 
-/* --- Botón "Crear Cuenta" --- */
+/* Inputs fuera de ion-item (fallback) */
+ion-input,
+ion-select,
+ion-textarea {
+  color: #222;
+}
+
+/* Autofill WebKit: mantener fondo BLANCO y texto oscuro */
+ion-input {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    box-shadow: 0 0 0 30px #ffffff inset !important;
+    -webkit-text-fill-color: #222 !important;
+  }
+}
+
+/* =========================================================
+   Password: medidor, requisitos y toggle
+   ========================================================= */
+.password-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .toggle-visibility {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9em;
+    color: #666;
+    cursor: pointer;
+
+    ion-icon { font-size: 1.1em; }
+  }
+}
+
+/* Barra de fortaleza de contraseña */
+.password-meter {
+  height: 6px;
+  border-radius: 6px;
+  background: #eee;
+  overflow: hidden;
+  margin: 8px 0 4px;
+
+  .fill {
+    display: block;
+    height: 100%;
+    width: 0%;              /* Ajusta via clase o style inline */
+    background: #ff6b6b;    /* Débil por defecto */
+    transition: width 220ms ease, background 220ms ease;
+  }
+
+  &.is-medium .fill { background: #f7b500; }  /* Amarillo */
+  &.is-strong .fill { background: #22c55e; }  /* Verde */
+}
+
+/* Lista de requisitos */
+.password-rules {
+  margin: 6px 0 10px;
+  padding-left: 18px;
+
+  li {
+    font-size: 0.85em;
+    color: #666;
+    margin: 2px 0;
+
+    &.ok { color: #22c55e; }
+    &.warn { color: #f7b500; }
+    &.bad { color: #e74c3c; }
+  }
+}
+
+/* =========================================================
+   Checkbox de términos / marketing
+   ========================================================= */
+.terms-row,
+.marketing-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 4px;
+
+  ion-checkbox {
+    --checkbox-background-checked: var(--ion-color-primary);
+    --size: 20px;
+    --border-radius: 4px;
+  }
+
+  .label {
+    font-size: 0.9em;
+    color: #555;
+
+    a {
+      color: var(--ion-color-primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+  }
+}
+
+/* =========================================================
+   Botones
+   ========================================================= */
 ion-button[color="primary"] {
   --border-radius: 10px;
   height: 50px;
   font-weight: 600;
-  text-transform: none; // Sin mayúsculas
+  text-transform: none;
 }
 
-/* --- Separador "O" --- */
-.separator {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: #ccc;
-  font-size: 0.9em;
-  margin-top: 30px;
-  margin-bottom: 20px;
-
-  &::before, &::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #eee;
-  }
-  &::before { margin-right: .25em; }
-  &::after { margin-left: .25em; }
-}
-
-/* --- Botón de Google (Cian con contorno) --- */
+/* Botón alternativo (Google / redes) */
 .btn-google {
-  --background: transparent; // Fondo transparente
-  --color: var(--ion-color-primary); // Texto de tu color cian
-  --border-color: var(--ion-color-primary); // Borde de tu color cian
+  --background: transparent;
+  --color: var(--ion-color-primary);
+  --border-color: var(--ion-color-primary);
   --border-width: 1px;
   --border-radius: 10px;
   height: 50px;
   font-weight: 600;
-  text-transform: none; // Sin mayúsculas
+  text-transform: none;
 
   ion-icon {
     font-size: 1.3em;
@@ -112,42 +207,61 @@ ion-button[color="primary"] {
   }
 }
 
-/* --- Link "Iniciar sesión" al final --- */
+/* =========================================================
+   Separador y links
+   ========================================================= */
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #999;
+  font-size: 0.9em;
+  margin-top: 24px;
+  margin-bottom: 18px;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  &::before { margin-right: 0.25em; }
+  &::after  { margin-left: 0.25em; }
+}
+
 .footer-link {
   font-size: 0.9em;
   color: #666;
-  margin-top: 25px;
+  margin-top: 22px;
+
   .login-link {
-    color: var(--ion-color-primary); // Tu color cian
+    color: var(--ion-color-primary);
     font-weight: 500;
     text-decoration: none;
   }
 }
 
-/* --- Mensajes de Validación (debajo de las cajas) --- */
+/* =========================================================
+   Mensajes de validación
+   ========================================================= */
 .validation-message {
   display: block;
   font-size: 0.8em;
-  margin-top: -15px; // Pone el mensaje más cerca de la caja
-  margin-left: 16px;
+  margin-top: -12px;  /* Acercar al input */
+  margin-left: 16px;  /* Alineado con padding del ion-item */
   margin-bottom: 10px;
+
   ion-icon {
     font-size: 1em;
     vertical-align: middle;
     margin-right: 4px;
+    color: #e74c3c;
   }
 }
 
-ion-input {
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    
-    /* 1. Sombra interna con el color de tu caja (negro) */
-    box-shadow: 0 0 0 30px #000000 inset !important;
-    
-    /* 2. Forzamos el texto a blanco */
-    -webkit-text-fill-color: #ffffff !important;
-  }
+/* Tip de ayuda sutil (debajo de un campo) */
+.helper-tip {
+  font-size: 0.82em;
+  color: #777;
+  margin: -8px 16px 10px;
 }

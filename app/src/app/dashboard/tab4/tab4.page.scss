@@ -1,0 +1,77 @@
+/* --- Tarjeta de Meta de Ahorro --- */
+.savings-goal-card {
+  --background: var(--ion-color-primary-tint); // Un fondo cian muy claro
+  border: 1px solid var(--ion-color-primary);
+  border-radius: 16px;
+  box-shadow: none;
+  margin: 16px;
+
+  ion-card-title {
+    color: var(--ion-color-primary-contrast); // Texto negro
+    font-size: 2rem;
+    font-weight: 800;
+  }
+  ion-card-subtitle {
+    color: #444;
+  }
+  p {
+    font-size: 0.9rem;
+    color: #333;
+    margin-top: 10px;
+  }
+  .savings-progress {
+    height: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    --progress-background: #fff;
+    --background: rgba(0,0,0,0.1);
+  }
+}
+
+/* --- Placeholder para el Gráfico --- */
+.chart-placeholder {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f4f4;
+  border-radius: 10px;
+  color: #999;
+  text-align: center;
+}
+
+/* --- Cabecera de la Lista "Presupuestos" --- */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+}
+
+/* --- Lista de Presupuestos --- */
+.budget-list {
+  ion-item {
+    --background: #ffffff;
+    --border-radius: 12px;
+    --inner-border-width: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 10px;
+  }
+  
+  ion-icon {
+    font-size: 1.5rem;
+    margin-right: 12px;
+  }
+
+  .budget-bar {
+    width: 60px;
+    ion-progress-bar {
+      height: 6px;
+      border-radius: 3px;
+    }
+  }
+}

@@ -2,42 +2,76 @@
   <ion-toolbar>
     <ion-title>Movimientos</ion-title>
   </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar 
-      placeholder="Buscar por categoría o valor" 
-      (ionInput)="handleSearch($event)">
+
+  <!-- Filtros compactos -->
+  <ion-toolbar class="filters-bar">
+    <ion-segment [(ngModel)]="typeFilter" (ionChange)="applyFilters()">
+      <ion-segment-button value="all">Todos</ion-segment-button>
+      <ion-segment-button value="income">Ingresos</ion-segment-button>
+      <ion-segment-button value="expense">Gastos</ion-segment-button>
+    </ion-segment>
+
+    <ion-buttons slot="end">
+      <ion-select interface="popover"
+                  [(ngModel)]="rangeFilter"
+                  (ionChange)="applyFilters()">
+        <ion-select-option value="month">Mes actual</ion-select-option>
+        <ion-select-option value="3m">Últimos 3 meses</ion-select-option>
+        <ion-select-option value="6m">Últimos 6 meses</ion-select-option>
+        <ion-select-option value="12m">Últimos 12 meses</ion-select-option>
+        <ion-select-option value="all">Todo</ion-select-option>
+      </ion-select>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar class="search-bar">
+    <ion-searchbar placeholder="Buscar por categoría o valor"
+                   (ionInput)="onSearchInput($event)">
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  
+<ion-content [fullscreen]="true" class="movements-page">
+
   <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
 
-  <ion-list [inset]="true" class="movement-list">
-    
-    <ion-item *ngFor="let mov of filteredMovimientos">
-      <ion-avatar slot="start" [ngClass]="{'gasto': mov.categoria.tipo.tipos_descripcion === 'Gastos', 'ingreso': mov.categoria.tipo.tipos_descripcion !== 'Gastos'}">
-        <ion-icon 
-          [name]="mov.categoria.tipo.tipos_descripcion === 'Gastos' ? 'arrow-down-outline' : 'arrow-up-outline'">
-        </ion-icon>
+  <!-- Lista -->
+  <ion-list inset class="movement-list" *ngIf="!loading; else skeletonList">
+    <ion-item *ngFor="let mov of filteredMovimientos; trackBy: trackById" class="movement-card">
+      <ion-avatar slot="start" [ngClass]="isExpense(mov) ? 'gasto' : 'ingreso'">
+        <ion-icon [name]="isExpense(mov) ? 'trending-down-outline' : 'trending-up-outline'"></ion-icon>
       </ion-avatar>
+
       <ion-label>
-        <h2>{{ mov.categoria.categorias_descripcion }}</h2>
-        <p>{{ mov.movimientos_fecha | date:'dd MMM yyyy, h:mm a' }}</p>
+        <h2 class="title">{{ mov?.categoria?.categorias_descripcion || 'Sin categoría' }}</h2>
+        <p class="meta">{{ mov?.movimientos_fecha | date:'d MMM yyyy, h:mm a' }}</p>
       </ion-label>
-      <ion-note 
-        slot="end" 
-        [color]="mov.categoria.tipo.tipos_descripcion === 'Gastos' ? 'danger' : 'success'">
-        $ {{ mov.movimientos_valor | number:'1.2-2' }}
+
+      <ion-note slot="end" class="amount" [class.negative]="isExpense(mov)" [class.positive]="!isExpense(mov)">
+        {{ isExpense(mov) ? '-' : '+' }} $ {{ (mov?.movimientos_valor || 0) | number:'1.0-0' }}
       </ion-note>
     </ion-item>
-    
-    <ion-item *ngIf="allMovimientos.length === 0 && !loading">
+
+    <ion-item *ngIf="filteredMovimientos.length === 0">
       <ion-label class="ion-text-center ion-text-wrap">
-        Aún no tienes movimientos registrados.
+        No hay resultados con los filtros actuales.
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <ng-template #skeletonList>
+    <ion-list inset class="movement-list">
+      <ion-item *ngFor="let s of skeletonItems" class="movement-card">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated style="width:44px;height:44px;border-radius:12px"></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <h2><ion-skeleton-text animated style="width:160px"></ion-skeleton-text></h2>
+          <p><ion-skeleton-text animated style="width:100px"></ion-skeleton-text></p>
+        </ion-label>
+        <ion-note slot="end"><ion-skeleton-text animated style="width:70px"></ion-skeleton-text></ion-note>
+      </ion-item>
+    </ion-list>
+  </ng-template>
 
 </ion-content>

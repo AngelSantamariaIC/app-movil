@@ -1,40 +1,51 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+    <ion-buttons slot="start"><ion-menu-button></ion-menu-button></ion-buttons>
     <ion-title>Inicio</ion-title>
     <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
-      </ion-button>
+      <ion-button><ion-icon slot="icon-only" name="notifications-outline"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
+  <!-- Bienvenida -->
   <div class="welcome-card ion-padding-horizontal">
-    <ion-avatar>
-      <img src="https://i.pravatar.cc/150" />
-    </ion-avatar>
-    <div class="welcome-text">
-      <ion-label>Hola, {{ user?.usuarios_nombres_apellidos }}</ion-label>
-    </div>
+    <ion-avatar><img src="https://i.pravatar.cc/150" /></ion-avatar>
+    <div class="welcome-text"><ion-label>Hola, {{ user?.usuarios_nombres_apellidos }}</ion-label></div>
   </div>
 
+  <!-- Balance mejorado -->
   <ion-card class="balance-card">
     <ion-card-header>
-      <ion-card-subtitle>Balance General</ion-card-subtitle>
-      <ion-card-title>$ {{ balance?.general | number:'1.2-2' }}</ion-card-title>
+      <ion-card-subtitle>BALANCE GENERAL</ion-card-subtitle>
+      <ion-card-title [class.negative]="(balance?.general || 0) < 0">
+        $ {{ balance?.general | number:'1.0-0' }}
+      </ion-card-title>
     </ion-card-header>
+
     <ion-card-content>
-      <div class="balance-summary">
-        <span class="income">+{{ balance?.ingresos | number:'1.2-2' }}</span>
-        <span class="expense">-{{ balance?.gastos | number:'1.2-2' }}</span>
+      <div class="stats">
+        <div class="kpi">
+          <div class="kpi-label">Ingresos</div>
+          <div class="kpi-value income">+ $ {{ (balance?.ingresos || 0) | number:'1.0-0' }}</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Gastos</div>
+          <div class="kpi-value expense">- $ {{ (balance?.gastos || 0) | number:'1.0-0' }}</div>
+        </div>
+        <div class="kpi total">
+          <div class="kpi-label">Total</div>
+          <div class="kpi-value" [class.positive]="(balance?.general || 0) >= 0" [class.negative]="(balance?.general || 0) < 0">
+            $ {{ (balance?.general || 0) | number:'1.0-0' }}
+          </div>
+        </div>
       </div>
     </ion-card-content>
   </ion-card>
 
+  <!-- Botones -->
   <ion-grid class="action-buttons">
     <ion-row>
       <ion-col>
@@ -44,7 +55,7 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button expand="block" color="primary">
+        <ion-button expand="block" color="primary" (click)="verMiPlan()">
           <ion-icon slot="start" name="analytics-outline"></ion-icon>
           Ver Mi Plan
         </ion-button>
@@ -52,34 +63,53 @@
     </ion-row>
   </ion-grid>
 
+  <!-- Cabecera de lista -->
   <div class="list-header ion-padding-horizontal">
     <h3>Flujo del Mes</h3>
-    <ion-button fill="clear" size="small">Ver todo</ion-button>
+    <ion-button fill="clear" size="small" routerLink="/movimientos">Ver todo</ion-button>
   </div>
 
-  <ion-list [inset]="true" class="movement-list">
-    <ion-item *ngFor="let mov of movimientos">
-      <ion-avatar slot="start" [ngClass]="{'gasto': mov.categoria.tipo.tipos_descripcion === 'Gastos', 'ingreso': mov.categoria.tipo.tipos_descripcion !== 'Gastos'}">
-        <ion-icon 
-          [name]="mov.categoria.tipo.tipos_descripcion === 'Gastos' ? 'arrow-down-outline' : 'arrow-up-outline'">
-        </ion-icon>
-      </ion-avatar>
+  <!-- Skeleton mientras carga -->
+  <ion-list *ngIf="loading" class="movement-list" inset>
+    <ion-item *ngFor="let s of skeletonItems">
+      <ion-avatar slot="start"><ion-skeleton-text animated style="width:44px;height:44px;border-radius:12px"></ion-skeleton-text></ion-avatar>
       <ion-label>
-        <h2>{{ mov.categoria.categorias_descripcion }}</h2>
-        <p>{{ mov.movimientos_fecha | date:'dd MMM yyyy' }}</p>
+        <h2><ion-skeleton-text animated style="width:140px"></ion-skeleton-text></h2>
+        <p><ion-skeleton-text animated style="width:90px"></ion-skeleton-text></p>
       </ion-label>
-      <ion-note 
-        slot="end" 
-        [color]="mov.categoria.tipo.tipos_descripcion === 'Gastos' ? 'danger' : 'success'">
-        $ {{ mov.movimientos_valor | number:'1.2-2' }}
+      <ion-note slot="end"><ion-skeleton-text animated style="width:70px"></ion-skeleton-text></ion-note>
+    </ion-item>
+  </ion-list>
+
+  <!-- Lista real -->
+  <ion-list *ngIf="!loading" class="movement-list" inset>
+    <ion-item *ngFor="let mov of movimientos; trackBy: trackById">
+      <ion-avatar
+        slot="start"
+        [ngClass]="{
+          'gasto': mov?.categoria?.tipo?.tipos_descripcion === 'Gastos',
+          'ingreso': mov?.categoria?.tipo?.tipos_descripcion !== 'Gastos'
+        }">
+        <ion-icon [name]="mov?.categoria?.tipo?.tipos_descripcion === 'Gastos' ? 'trending-down-outline' : 'trending-up-outline'"></ion-icon>
+      </ion-avatar>
+
+      <ion-label>
+        <h2>{{ mov?.categoria?.categorias_descripcion || 'Sin categoría' }}</h2>
+        <p class="subtitle">{{ mov.movimientos_fecha | date:'d MMM, h:mm a' }}</p>
+      </ion-label>
+
+      <ion-note
+        slot="end"
+        [class.negative]="mov.movimientos_valor < 0"
+        [class.positive]="mov.movimientos_valor >= 0">
+        {{ mov.movimientos_valor < 0 ? '-' : '+' }} $ {{ (mov.movimientos_valor | number:'1.0-0') }}
       </ion-note>
     </ion-item>
-    
-    <ion-item *ngIf="movimientos.length === 0 && !loading">
+
+    <ion-item *ngIf="movimientos.length === 0">
       <ion-label class="ion-text-center ion-text-wrap">
         No hay movimientos este mes. ¡Empieza registrando uno!
       </ion-label>
     </ion-item>
   </ion-list>
-  
 </ion-content>

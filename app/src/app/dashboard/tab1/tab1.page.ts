@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule, ModalController, NavController, } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs'; // Para hacer varias llamadas a la vez
 import { RouterLink } from '@angular/router'; // Importa RouterLink
@@ -18,6 +18,8 @@ const API_BASE = 'http://localhost:8080';
   // ¡Asegúrate de importar CommonModule y RouterLink!
   imports: [IonicModule, CommonModule, FormsModule, RouterLink], 
 })
+
+
 export class Tab1Page implements OnInit {
   
   user: any = null; // Para "Hola, Karol"
@@ -27,7 +29,8 @@ export class Tab1Page implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private modalCtrl: ModalController // Para abrir el modal de "Registrar Gasto"
+    private modalCtrl: ModalController, // Para abrir el modal de "Registrar Gasto"
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {
@@ -58,11 +61,20 @@ export class Tab1Page implements OnInit {
     });
   }
 
+  skeletonItems = Array.from({ length: 6 });
+
+  trackById = (_: number, item: any) => item?.movimientos_id ?? item?.id ?? _;
+
   // Esta función se llamará cuando la página vuelva a mostrarse
   // (ej. después de cerrar un modal)
   ionViewWillEnter() {
     this.loadData();
   }
+
+  verMiPlan() {
+    this.navCtrl.navigateRoot('/dashboard/tab4');
+  }
+
 
   // Función para el botón "Registrar Gastos"
   async registrarGasto() {

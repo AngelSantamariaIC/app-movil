@@ -4,6 +4,10 @@
  * Hacemos este selector 'app-tab2' MÁS específico
  * para que gane la "guerra de CSS" contra el estilo de caja negra.
  */
+
+
+
+
 app-tab2 .movement-list ion-item {
   --background: #ffffff; // <-- ¡Fuerza el fondo blanco!
   --border-radius: 12px;
@@ -42,4 +46,122 @@ app-tab2 .movement-list ion-avatar {
 app-tab2 .movement-list ion-note {
   font-weight: 600;
   font-size: 1.1rem;
+}
+
+.movement-list {
+  ion-item {
+    --background: #ffffff;
+    --inner-border-width: 0;
+    --border-radius: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  }
+
+  ion-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+
+    ion-icon { font-size: 1.5rem; }
+
+    &.gasto   { background: #fff0f0; ion-icon { color: var(--ion-color-danger); } }
+    &.ingreso { background: #e6f8ee; ion-icon { color: var(--ion-color-success); } }
+  }
+
+  ion-note {
+    font-weight: 700;
+    &.positive { color: var(--ion-color-success); }
+    &.negative { color: var(--ion-color-danger); }
+  }
+}
+/* ===== Forzar look claro y eliminar franjas negras ===== */
+.movements-page {
+  --background: #ffffff; /* fondo del content */
+}
+
+ion-list.movement-list {
+  background: transparent; /* sin fondo negro del list */
+  padding: 0 12px 16px;    /* controla márgenes horizontales */
+}
+
+/* ===== Toolbars de filtros y búsqueda ===== */
+.filters-bar {
+  ion-segment {
+    --background: #f3f4f6;
+    border-radius: 12px;
+    margin: 8px 12px;
+  }
+  ion-segment-button {
+    --indicator-color: var(--ion-color-primary);
+    --color-checked: #fff;
+    --background-checked: var(--ion-color-primary);
+    min-height: 36px;
+    border-radius: 8px;
+  }
+  ion-select {
+    --background: #fff;
+    --color: #111;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-right: 12px;
+    padding-inline: 6px;
+  }
+}
+
+.search-bar ion-searchbar {
+  --background: #f3f4f6;
+  --color: #111;
+  --placeholder-color: #9ca3af;
+  --icon-color: #9ca3af;
+  border-radius: 12px;
+  margin: 0 12px 8px;
+}
+
+/* ===== Tarjeta de movimiento ===== */
+.movement-card {
+  --background: #ffffff;
+  --inner-border-width: 0;
+  border-radius: 14px;
+  margin: 10px 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  padding: 2px 0; /* para que no “sangre” el shadow */
+
+  ion-label {
+    margin-right: 8px; /* separa del monto */
+  }
+
+  .title {
+    font-weight: 700;
+    color: #111;
+    margin: 0;
+  }
+  .meta {
+    color: #6b7280;
+    font-size: .9rem;
+    margin-top: 2px;
+  }
+
+  .amount {
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    &.positive { color: var(--ion-color-success); }
+    &.negative { color: var(--ion-color-danger); }
+  }
+
+  ion-avatar {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+
+    ion-icon { font-size: 1.4rem; }
+
+    &.ingreso { background: #e6f8ee; ion-icon { color: var(--ion-color-success); } }
+    &.gasto   { background: #fff0f0; ion-icon { color: var(--ion-color-danger); } }
+  }
+}
+
+/* ===== Ajustes responsive pequeños ===== */
+@media (max-width: 375px) {
+  .filters-bar ion-segment { margin-right: 6px; }
+  .movement-card .amount { font-size: .95rem; }
 }
